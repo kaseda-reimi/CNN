@@ -1,6 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.layers import MaxPool2D
+from tensorflow.keras.layers import Conv2D, MaxPool2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
 from tensorflow.keras.utils import plot_model, to_categorical
@@ -37,7 +36,8 @@ def main():
     model.add(Dense(1024,activation="relu"))
     model.add(Dropout(1.0))
 
-    model.add(Dense(nb_classes, activation='softmax'))
+    model.add(Dense(nb_classes))
+    model.add(Activation("softmax"))
 
     optimizer = Adam(learning_rate=lr)
 
@@ -48,6 +48,6 @@ def main():
     history = model.fit(
         X_train, Y_train, batch_size=batch_size, epochs=nb_epoch, verbose=1, validation_split=0.1
         )
-    
+
 if __name__ == '__main__':
     main()
