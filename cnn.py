@@ -46,8 +46,7 @@ def main():
     )
 
     history = model.fit(
-        X_train, Y_train, batch_size=batch_size, 
-        epochs=nb_epoch, verbose=1, validation_split=0.1
+        X_train, Y_train, batch_size=batch_size, epochs=nb_epoch, verbose=1, validation_split=0.1
         )
     
 if __name__ == '__main__':
