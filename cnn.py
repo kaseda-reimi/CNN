@@ -4,6 +4,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
 from tensorflow.keras.utils import plot_model, to_categorical
 from tensorflow.keras.datasets import cifar10
+import os
 
 classes = 10
 lr = 0.001
@@ -11,6 +12,7 @@ batch_size = 128
 epochs = 10
 
 def main():
+    os.environ['CUDA_VISIBLE_DEVICES'] = ''
     (X_train, y_train),(X_test, y_test) = cifar10.load_data()
     # floatに型変換
     X_train = X_train.astype('float32')
