@@ -2,7 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPool2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
-from tensorflow.keras.utils import plot_model, to_categorical
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.datasets import cifar10
 import os
 
@@ -52,7 +52,7 @@ def main():
 
     history = model.fit(
         X_train, Y_train, batch_size=batch_size, epochs=epochs, verbose=1, validation_split=0.1
-        )
+    )
 
 if __name__ == '__main__':
     main()
