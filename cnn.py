@@ -12,7 +12,6 @@ batch_size = 128
 epochs = 10
 
 def main():
-    os.environ['CUDA_VISIBLE_DEVICES'] = ''
     (X_train, y_train),(X_test, y_test) = cifar10.load_data()
     # floatに型変換
     X_train = X_train.astype('float32')
