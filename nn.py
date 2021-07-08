@@ -43,7 +43,7 @@ def main():
     plt.grid()
     plt.xlabel('epoch')
     plt.ylabel('loss')
-    plt.show()
+    plt.savefig("nn_learning.png")
 
 if __name__ == '__main__':
     main()
