@@ -22,6 +22,7 @@ def main():
     model = Sequential()
     model.add(InputLayer(input_shape=(784,)))
     model.add(Dense(10, activation='softmax'))
+    
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
     history = model.fit(
