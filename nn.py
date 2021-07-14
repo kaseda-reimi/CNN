@@ -4,9 +4,12 @@ from tensorflow.keras.layers import Dense, Dropout, InputLayer
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.utils import to_categorical
 import matplotlib.pyplot as plt
+import os
 
 epochs = 20
 batch_size = 128
+
+model_path = os.getcwd()+'/nn_model'
 
 def main():
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -45,6 +48,8 @@ def main():
     plt.xlabel('epoch')
     plt.ylabel('loss')
     plt.savefig("nn_learning.png")
+
+    model.save(model_path)
 
 if __name__ == '__main__':
     main()
