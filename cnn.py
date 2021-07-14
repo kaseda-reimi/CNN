@@ -5,11 +5,15 @@ from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
+import os
+
 
 classes = 10
 lr = 0.001
 batch_size = 128
 epochs = 10
+
+model_path = os.getcwd()+'/cnn_model'
 
 def main():
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
@@ -67,6 +71,8 @@ def main():
     plt.xlabel('epoch')
     plt.ylabel('loss')
     plt.savefig("cnn_learning.png")
+
+    model.save(model_path)
 
 if __name__ == '__main__':
     main()
