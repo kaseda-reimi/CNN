@@ -34,6 +34,7 @@ def main():
         #近傍解生成
         #評価
         #入れ替え
+        print(i)
     
     print(design)
 
