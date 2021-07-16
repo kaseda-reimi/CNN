@@ -1,3 +1,5 @@
+#for Lumerical
+
 import numpy as np
 
 x_max = 20
