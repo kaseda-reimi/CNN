@@ -2,30 +2,33 @@
 
 import numpy as np
 
-x_max = 20
-y_max = 30
-EA_min = x_max * y_max * 0.1
-EA_max = x_max * y_max * 0.5
+x_len = 20
+y_len = 20
+EA_min = x_len * y_len * 0.1
+EA_max = x_len * y_len * 0.5
+
+class_arr1 = np.array([[1,1,1],[1,0,1],[1,1,1]])
 
 def main():
     EA = np.random.randint(EA_min, EA_max)
-    design = np.zeros((y_max,x_max))
+    design = np.zeros((y_len,x_len))
     #初期位置
-    x = np.random.randint(0, x_max)
+    x = np.random.randint(0, x_len)
     y = 0
 
     for i in range(1,EA):
         design[y][x] = 2
-        if 0<y<y_max :
+        #周囲を1に
+        if 0<y<y_len :
             if design[y-1][x]==0 :
                 design[y-1][x] = 1
-        if y<y_max-1 :
+        if y<y_len-1 :
             if design[y+1][x]==0 :
                 design[y+1][x] = 1
-        if 0<x<x_max :
+        if 0<x<x_len :
             if design[y][x-1]==0 :
                 design[y][x-1] = 1
-        if x<x_max-1 :
+        if x<x_len-1 :
             if design[y][x+1]==0 :
                 design[y][x+1] = 1
         order = np.random.rand(4)
@@ -38,7 +41,7 @@ def main():
             _x = direction_x[direction]
             _y = direction_y[direction]
 
-            if 0<=_x<x_max and 0<=_y<y_max :
+            if 0<=_x<x_len and 0<=_y<y_len :
                 if design[_y][_x] == 1 :
                     y, x = _y, _x
                     break
@@ -46,13 +49,12 @@ def main():
             order[direction] = 0
             count = count + 1
             if count == 4:
-                #pan, pasta, udon, small pasuta, syanpu-
-                for i in range(0,x_max):
+                for i in range(0,x_len):
                     if design[y][i] == 1:
                         x = i
                         break
                 if design[y][x] != 1:
-                    for j in range(0, y_max):
+                    for j in range(0, y_len):
                         if design[j][x] == 1:
                             y = j
                             break
@@ -60,21 +62,25 @@ def main():
                 if design[y][x] != 1:
                     flag = False
                     print("例外")
-                    for i in range(0, x_max):
-                        for j in range(0, y_max):
+                    for i in range(0, x_len):
+                        for j in range(0, y_len):
                             if design[j][i] == 1:
                                 x, y = i, j
                                 flag = True
                                 break
                         if flag:
                             break
-
                 count = 5
-                
-            
-        
-    print(design)
+    
+
     print(EA)
+    design = np.insert(design, y_len, 1, axis=0)
+    design = np.insert(design, 0, 1, axis=0)
+    design = np.insert(design, x_len, 1, axis=1)
+    design = np.insert(design, 0, 1, axis=1)
+    
+    print(design)
+    return design
 
 if __name__ == '__main__':
     main()
