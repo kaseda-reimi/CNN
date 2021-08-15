@@ -1,10 +1,12 @@
-from tensorflow.keras.datasets import mnist
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, InputLayer
-from tensorflow.keras.optimizers import RMSprop
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import SGD
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import os
+import function as fc
+from design import x_len, y_len
 
 epochs = 20
 batch_size = 128
@@ -12,21 +14,16 @@ batch_size = 128
 model_path = os.getcwd()+'/nn_model'
 
 def main():
-    (x_train, y_train), (x_test, y_test) = mnist.load_data()
-    x_train  = x_train.reshape(60000, 784)
-    x_test   = x_test.reshape(10000, 784)
-    x_train  = x_train.astype('float32')
-    x_test   = x_test.astype('float32')
-    x_train /= 255
-    x_test  /= 255
-    y_train  = to_categorical(y_train, 10)
-    y_test   = to_categorical(y_test, 10)
+    input_data, output_data = fc.get_data()
+    input_data  = input_data.astype('float32')
+    input_data /= 2
+    x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
     model = Sequential()
-    model.add(InputLayer(input_shape=(784,)))
-    model.add(Dense(10, activation='softmax'))
+    model.add(InputLayer(input_shape=(x_len*y_len,)))
+    model.add(Dense(10, activation='linear'))
     
-    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
     history = model.fit(
         x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, validation_data=(x_test, y_test)
