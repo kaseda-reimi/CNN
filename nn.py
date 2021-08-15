@@ -50,5 +50,9 @@ def main():
 
     model.save(model_path)
 
+    predict = model.predict(x_test)
+    print(y_test)
+    print(predict)
+
 if __name__ == '__main__':
     main()
