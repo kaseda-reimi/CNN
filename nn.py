@@ -15,8 +15,6 @@ model_path = os.getcwd()+'/nn_model'
 
 def main():
     input_data, output_data = fc.get_data()
-    input_data  = input_data.reshape(-1, x_len*y_len)
-    output_data = output_data.reshape(-1, 2)
     input_data  = input_data.astype('float32')
     input_data /= 2
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
