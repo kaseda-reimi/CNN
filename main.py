@@ -5,13 +5,13 @@ import random
 #from cnn import model_path
 import design
 from design import x_len, y_len
+import os
 
 epochs = 1
 change_level = 3
 
 
 #分類に使う配列
-class_arr1 = np.array([[1,1,1],[1,0,1],[1,1,1]])
 class_arr2 = np.array([[0,1,0],[1,0,1],[0,1,0]])
 class_arr3 = np.array([[1,1,1],[0,0,0],[0,0,0]])
 class_arr4 = np.array([[0,0,0],[0,0,0],[1,1,1]])
@@ -31,10 +31,10 @@ def create_first_design():
 
 #近傍解生成
 def create_neighbors(design):
-    pattern = 0
+    pattern = 1
     for cl in range (change_level):
         #変更箇所選出
-        if pattern > 0:
+        if pattern > 1:
             next = np.array(list(zip(*np.where(change_area==1))))
             loop = True
             for n in range(next.shape[0]):
@@ -44,8 +44,8 @@ def create_neighbors(design):
                     loop = False
                     break
             if loop:
-                pattern = 0
-        if pattern == 0:
+                pattern = 1
+        if pattern == 1:
             #境界部抽出
             groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
             #変更箇所選定
@@ -61,22 +61,15 @@ def create_neighbors(design):
         print(cp_x,cp_y,cl)
         print(change_area)
         _change_area = np.where(change_area>1, 0, change_area)
-        print(_change_area)
-        pattern = np.sum(class_arr1*_change_area)
+        pattern = np.sum(_change_area)
         print("pattern",pattern)
         subpattern = np.sum(class_arr2*_change_area)
         print("subpattern", subpattern)
         #分岐
-        if pattern == 0:
-            change_area[1][1] = change_area[0][0]
+        if pattern < 3:
+            change_area[1][1] = 2
         
-        elif pattern == 1:
-            if _change_area[0][0] == 0:
-                change_area[1][1] = change_area[0][0]
-            elif _change_area[0][1] == 0:
-                change_area[1][1] = change_area[0][1]
-        
-        elif pattern == 2:
+        elif pattern == 3:
             if subpattern == 0:#BF
                 #F
                 if np.all(_change_area == _change_area.T):
@@ -131,10 +124,8 @@ def create_neighbors(design):
                         change_area[2][1] = 1
                         change_area[1][1] = change_area[0][1]
                 #A
-                elif np.sum(class_arr3*_change_area) == 1:
-                    change_area[1][1] = change_area[2][1]
-                elif np.sum(class_arr4*_change_area) == 1:
-                    change_area[1][1] = change_area[0][1]
+                else:
+                    change_area[1][1] = 2
             
             elif subpattern == 2:#CE
                 #E
@@ -159,9 +150,9 @@ def create_neighbors(design):
                 elif np.sum(class_arr4*_change_area) == 1:
                     change_area[1][1] = change_area[0][1]
             
-        elif pattern == 3:
+        elif pattern == 4:
             if subpattern == 0:#G　未実装
-                print("3-G")
+                print("===4-G===")
                 if _change_area[0][0] == 0:
                     _change_area[1:,1:] = 1
                     _change_area[2][2] = 0
@@ -185,7 +176,7 @@ def create_neighbors(design):
                     elif np.sum(class_arr5*_change_area) == 1:
                         change_area[0][1] = 1
                     elif _change_area[2][1] == 1:
-                        print("3-H")
+                        print("===4-H===")
                 elif np.sum(class_arr4*_change_area) >= 2:
                     change_area[1][1] = change_area[0][1]
                     if _change_area[0][0] == 1:
@@ -195,7 +186,7 @@ def create_neighbors(design):
                     elif np.sum(class_arr5*_change_area) == 1:
                         change_area[2][1] = 1
                     elif _change_area[0][1] == 1:
-                        print("3-H")
+                        print("===4-H===")
                 elif np.sum(class_arr3.T*_change_area) >= 2:
                     change_area[1][1] = change_area[1][2]
                     if _change_area[0][2] == 1:
@@ -203,7 +194,7 @@ def create_neighbors(design):
                     elif _change_area[2][2] == 1:
                         change_area[2][1] = 1
                     elif _change_area[1][2] == 1:
-                        print("3-H")
+                        print("===4-H===")
                 elif np.sum(class_arr4.T*_change_area) >= 2:
                     change_area[1][1] = change_area[1][0]
                     if _change_area[0][0] == 1:
@@ -211,7 +202,7 @@ def create_neighbors(design):
                     elif _change_area[2][0] == 1:
                         change_area[2][1] = 1
                     elif _change_area[1][0] == 1:
-                        print("3-H")
+                        print("===4-H===")
             
             elif subpattern == 2:#BCEJ
                 #E
@@ -277,73 +268,86 @@ def create_neighbors(design):
                         change_area[1][1] = change_area[1][2]
                     elif _change_area[1][2] == 1:
                         change_area[1][1] = change_area[1][0]
-        #この先未実装
-        elif pattern == 100:#4
-            #_change_area[1][1] = 0
-            if subpattern == 0:#L
-                print("4-L")
+        
+        elif pattern == 5:
+            if subpattern == 0:#L 未実装
+                print("===5-L===")
             
-            elif subpattern == 1:#BJ
+            elif subpattern == 1:#BJ J未実装
                 #B
-                _change_area[1][1] = 0
-                if np.sum(class_arr3*_change_area) == 3:
-                    if _change_area[2][0] == 1:
-                        _change_area[1][0] = 1
-                    elif _change_area[2][2] == 1:
-                        _change_area[1][2] = 1
-                elif np.sum(class_arr4*_change_area) == 3:
-                    if _change_area[0][0] == 1:
-                        _change_area[1][0] = 1
-                    elif _change_area[0][2] == 1:
-                        _change_area[1][2] = 1
-                elif np.sum(class_arr3.T*_change_area) == 3:
-                    if _change_area[0][2] == 1:
-                        _change_area[0][1] = 1
-                    elif _change_area[2][2] == 1:
-                        _change_area[2][1] = 1
-                elif np.sum(class_arr4.T*_change_area) == 3:
-                    if _change_area[0][0] == 1:
-                        _change_area[0][1] = 1
-                    elif _change_area[2][0] == 1:
-                        _change_area[2][1] = 1
+                if np.sum(class_arr3*_change_area)==3 or np.sum(class_arr4*_change_area)==3:
+                    if np.sum(class_arr3.T*_change_area) == 2:
+                        change_area[1][0] = 1
+                        change_area[1][1] = change_area[1][2]
+                    elif np.sum(class_arr4.T*_change_area) == 2:
+                        change_area[1][2] = 1
+                        change_area[1][1] = change_area[1][0]
+                elif np.sum(class_arr3.T*_change_area)==3 or np.sum(class_arr4.T*_change_area)==3:
+                    if np.sum(class_arr3*_change_area) == 2:
+                        change_area[0][1] = 1
+                        change_area[1][1] = change_area[2][1]
+                    elif np.sum(class_arr4*_change_area) == 2:
+                        change_area[2][1] = 1
+                        change_area[1][1] = change_area[0][1]
                 #J
                 else:
-                    print("4-J")
-                    _change_area[1][1] = 1
+                    print("===5-J===")
 
-            elif subpattern == 2:#ACEFHIK
-                #IK
+            elif subpattern == 2:#ACEFHIK　CIKのみ実装
+                #CIK
                 if np.sum(class_arr5*_change_area) == 2:
+                    #I
                     if np.sum(class_arr3*_change_area) == 2:
-                        _change_area[0][1] = 1
+                        change_area[2][1] = 1
+                        change_area[1][1] = change_area[0][1]
                     elif np.sum(class_arr4*_change_area) == 2:
-                        _change_area[2][1] = 1
+                        change_area[0][1] = 1
+                        change_area[1][1] = change_area[2][1]
+                    #CK
                     else:
                         dise = random.randint(0,1)
                         if dise == 0:
-                            _change_area[0][1] = 1
+                            change_area[0][1] = 1
+                            change_area[1][1] = change_area[2][1]
                         elif dise == 1:
-                            _change_area[2][1] = 1
+                            change_area[2][1] = 1
+                            change_area[1][1] = change_area[0][1]
                 elif np.sum(class_arr5.T*_change_area) == 2:
+                    #I
                     if np.sum(class_arr3.T*_change_area) == 2:
-                        _change_area[1][2] = 1
+                        change_area[1][2] = 1
+                        change_area[1][1] = change_area[1][0]
                     elif np.sum(class_arr4.T*_change_area) == 2:
-                        _change_area[1][0] = 1
+                        change_area[1][0] = 1
+                        change_area[1][1] = change_area[1][2]
+                    #CK
                     else:
                         dise = random.randint(0,1)
                         if dise == 0:
-                            _change_area[1][0] = 1
+                            change_area[1][0] = 1
+                            change_area[1][1] = change_area[1][2]
                         elif dise == 1:
-                            _change_area[1][2] = 1
-                #A
+                            change_area[1][2] = 1
+                            change_area[1][1] = change_area[1][0]
                 
             #elif subpattern == 3:#DG
         
-        else:
+        if pattern > 5:#else:
             print(pattern,"が出ました")
-            print(_change_area)
+            cl -= 1
 
         print(change_area,cl)
+
+    print(design)
+    #穴埋め
+    groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
+    num = 0
+    for n in groove:
+        area = design[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
+        if np.prod(area) > 0:
+            area[1][1] = 2
+            num += 1
+    print(num)
     neighbors = design
     return neighbors
 
@@ -370,5 +374,14 @@ if __name__ == '__main__':
     #print(map)
 
     neighbors = create_neighbors(map)
-    print(map)
-    
+    #neighbors = create_first_design()
+    print(neighbors)
+    path = '/data_result.txt'
+    data = neighbors[1:y_len+1, 1:x_len+1]
+    with open(os.getcwd()+path, mode='w') as f:
+        for i in range(data.shape[0]):
+            for n in data[i]:
+                f.write(str(n)+" ")
+            f.write('\n')
+        f.write('\n')
+    #fc.write_data('/data_no.txt', neighbors[1:y_len+1, 1:x_len+1])
