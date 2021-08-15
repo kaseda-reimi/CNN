@@ -8,7 +8,7 @@ import os
 import function as fc
 from design import x_len, y_len
 
-epochs = 20
+epochs = 100
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
