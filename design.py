@@ -2,12 +2,11 @@
 
 import numpy as np
 
-x_len = 20
-y_len = 20
+x_len = 40
+y_len = 6
 EA_min = x_len * y_len * 0.1
-EA_max = x_len * y_len * 0.5
+EA_max = x_len * y_len * 0.4
 
-class_arr1 = np.array([[1,1,1],[1,0,1],[1,1,1]])
 
 def main():
     EA = np.random.randint(EA_min, EA_max)
@@ -15,7 +14,7 @@ def main():
     #初期位置
     x = np.random.randint(0, x_len)
     y = 0
-
+    #形成
     for i in range(1,EA):
         design[y][x] = 2
         #周囲を1に
@@ -71,8 +70,7 @@ def main():
                         if flag:
                             break
                 count = 5
-    
-
+    #１で囲む
     print(EA)
     design = np.insert(design, y_len, 1, axis=0)
     design = np.insert(design, 0, 1, axis=0)
@@ -80,7 +78,18 @@ def main():
     design = np.insert(design, 0, 1, axis=1)
     
     print(design)
+    #穴埋め
+    groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
+    num = 0
+    for n in groove:
+        area = design[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
+        if np.prod(area) > 0:
+            area[1][1] = 2
+            num += 1
+    print(num)
+    print(design)
     return design
 
 if __name__ == '__main__':
     main()
+    
