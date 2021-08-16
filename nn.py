@@ -8,7 +8,8 @@ import os
 import function as fc
 from design import x_len, y_len
 
-epochs = 100
+input_size = y_len*x_len
+epochs = 1000
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
@@ -16,12 +17,13 @@ model_path = os.getcwd()+'/nn_model'
 def main():
     input_data, output_data = fc.get_data()
     input_data  = input_data.astype('float32')
-    input_data = input_data.reshape(-1, y_len*x_len)
+    input_data = input_data.reshape(-1, input_size)
     input_data /= 2
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
     model = Sequential()
-    model.add(InputLayer(input_shape=(x_len*y_len,)))
+    model.add(InputLayer(input_shape=(input_size,)))
+    model.add(Dense(input_size/2, activation = "relu"))
     model.add(Dense(2, activation='linear'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
