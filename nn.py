@@ -9,7 +9,7 @@ import function as fc
 from design import x_len, y_len
 
 input_size = y_len*x_len
-epochs = 1000
+epochs = 100
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
