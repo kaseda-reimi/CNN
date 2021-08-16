@@ -53,8 +53,8 @@ def main():
     model.save(model_path)
 
     predict = model.predict(x_test)
-    print(y_test)
-    print(predict)
+    for i in range(y_test.shape[0]):
+        print(y_test[i], predict[i])
 
 if __name__ == '__main__':
     main()
