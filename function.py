@@ -17,9 +17,14 @@ def get_data():
     output_ratio = np.concatenate([output_ratio, output_ratio])
     return structure, output_ratio
 
+def normalize(x):
+    normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
+    return normalized_x
+
 if __name__ == '__main__':
     x, y = get_data()
-    print(x[37])
-    print(y[37])
-    print(x.shape[0])
+    print(y[:,0])
+    y[:,0] = normalize(y[:,0])
+    print(y[:,0])
+
     
