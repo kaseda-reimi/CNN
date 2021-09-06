@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import os
 import function as fc
-from design import x_len, y_len
+from design import x_len, y_len #40,6
 
 input_size = y_len*x_len
 epochs = 1000
@@ -28,7 +28,8 @@ def main():
     model = Sequential()
     model.add(InputLayer(input_shape=(input_size,)))
     model.add(Dense(input_size/4, activation = "relu"))
-    model.add(Dense(input_size/6, activation = "relu"))
+    model.add(Dense(input_size/3, activation = "relu"))
+    model.add(Dense(input_size/2, activation = "relu"))
     model.add(Dense(2, activation='linear'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
