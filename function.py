@@ -23,8 +23,8 @@ def normalize(x):
 
 if __name__ == '__main__':
     x, y = get_data()
-    print(y[:,0])
-    y[:,0] = normalize(y[:,0])
-    print(y[:,0])
+    print(y.shape[0])
+    #y[:,0] = normalize(y[:,0])
+    #print(y[:,0])
 
     
