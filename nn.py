@@ -27,9 +27,9 @@ def main():
 
     model = Sequential()
     model.add(InputLayer(input_shape=(input_size,)))
-    model.add(Dense(input_size/4, activation = "relu"))
-    model.add(Dense(input_size/3, activation = "relu"))
     model.add(Dense(input_size/2, activation = "relu"))
+    model.add(Dense(input_size/3, activation = "relu"))
+    model.add(Dense(input_size/4, activation = "relu"))
     model.add(Dense(2, activation='linear'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
