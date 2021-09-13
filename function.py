@@ -22,9 +22,31 @@ def normalize(x):
     normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
     return normalized_x
 
+def evaluation(y):
+    E = y[0] / y[1]
+    return E
+
+def search_E_max(data):
+    E_max = -10
+    max_index = 0
+    for i in range(data.shape[0]):
+        E = evaluation(data[i])
+        if E > E_max:
+            E_max = E
+            max_index = i
+    return E_max, max_index
+
+
+
+
 if __name__ == '__main__':
     x, y = get_data()
     print(y.shape[0])
+    E_max, max_index = search_E_max(y)
+    print(E_max)
+    print(x[max_index])
+    print(y[max_index])
+    print(max_index)
     #y[:,0] = normalize(y[:,0])
     #print(y[:,0])
 
