@@ -12,7 +12,7 @@ y_len = 6
 
 lr = 0.001
 batch_size = 128
-epochs = 10
+epochs = 50
 
 model_path = os.getcwd()+'/cnn_model'
 
