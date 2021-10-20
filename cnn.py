@@ -18,6 +18,7 @@ model_path = os.getcwd()+'/cnn_model'
 
 def main():
     input_data, output_data = fc.get_data()
+    input_data = input_data.reshape(-1, y_len, x_len, 1)
     #x_train  = x_train.reshape(60000, 28, 28, 1)
     #x_test   = x_test.reshape(10000, 28, 28, 1)
     input_data  = input_data.astype('float32')
@@ -32,7 +33,7 @@ def main():
     # モデルの定義
     model = Sequential()
 
-    model.add(Conv2D(32,(2, 4),input_shape=(y_len,x_len)))
+    model.add(Conv2D(32,(2, 4),input_shape=(y_len,x_len,1)))
     model.add(Activation("relu"))
     model.add(MaxPool2D(pool_size=(1,2)))
 
