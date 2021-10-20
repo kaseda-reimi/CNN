@@ -34,11 +34,11 @@ def main():
 
     model.add(Conv2D(32,(2, 4),input_shape=(y_len,x_len,1)))
     model.add(Activation("relu"))
-    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(MaxPool2D(pool_size=(1,2)))
 
     model.add(Conv2D(64,(2, 4)))
     model.add(Activation("relu"))
-    model.add(MaxPool2D(pool_size=(2,2)))
+    model.add(MaxPool2D(pool_size=(1,2)))
 
     model.add(Conv2D(64,(2, 4)))
     model.add(Activation("relu"))
