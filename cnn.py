@@ -21,7 +21,7 @@ def main():
     #x_train  = x_train.reshape(60000, 28, 28, 1)
     #x_test   = x_test.reshape(10000, 28, 28, 1)
     input_data  = input_data.astype('float32')
-    output_data   = output_data.astype('float32')
+    #output_data   = output_data.astype('float32')
     #正規化
     input_data /= 2
     output_data[:,0] = fc.normalize(output_data[:,0])
