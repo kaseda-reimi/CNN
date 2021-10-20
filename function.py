@@ -26,6 +26,16 @@ def evaluation(y):
     E = y[0] / y[1]
     return E
 
+def write_data(path, data):
+    with open(os.getcwd()+path, mode='w') as f:
+        for i in range(data.shape[0]):
+            for j in range(data.shape[1]):
+                for n in data[i][j]:
+                    f.write(str(n)+" ")
+                f.write('\n')
+            f.write('\n')
+    print("了")
+
 def search_E_max(data):
     E_max = -10
     max_index = 0
@@ -41,13 +51,5 @@ def search_E_max(data):
 
 if __name__ == '__main__':
     x, y = get_data()
-    print(y.shape[0])
-    E_max, max_index = search_E_max(y)
-    print(E_max)
-    print(x[max_index])
-    print(y[max_index])
-    print(max_index)
-    #y[:,0] = normalize(y[:,0])
-    #print(y[:,0])
-
+    write_data("/design.txt",x)
     

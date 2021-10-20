@@ -2,14 +2,13 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPool2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Activation, Dropout, Flatten
-from sklearn.model_selection import train_test_split
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
 import os
-import function as fc
 
-x_len = 40
-y_len = 6
 
+classes = 10
 lr = 0.001
 batch_size = 128
 epochs = 10
@@ -17,22 +16,20 @@ epochs = 10
 model_path = os.getcwd()+'/cnn_model'
 
 def main():
-    input_data, output_data = fc.get_data()
-    #x_train  = x_train.reshape(60000, 28, 28, 1)
-    #x_test   = x_test.reshape(10000, 28, 28, 1)
-    input_data  = input_data.astype('float32')
-    output_data   = output_data.astype('float32')
-    #正規化
-    input_data /= 2
-    output_data[:,0] = fc.normalize(output_data[:,0])
-    output_data[:,1] = fc.normalize(output_data[:,1])
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    x_train  = x_train.reshape(60000, 28, 28, 1)
+    x_test   = x_test.reshape(10000, 28, 28, 1)
+    x_train  = x_train.astype('float32')
+    x_test   = x_test.astype('float32')
+    x_train /= 255
+    x_test  /= 255
+    y_train  = to_categorical(y_train, classes)
+    y_test   = to_categorical(y_test, classes)
 
-    x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
-    
     # モデルの定義
     model = Sequential()
 
-    model.add(Conv2D(32,(3, 3),input_shape=(y_len,x_len,1)))
+    model.add(Conv2D(32,(3, 3),input_shape=(28,28,1)))
     model.add(Activation("relu"))
     model.add(MaxPool2D(pool_size=(2,2)))
 
@@ -47,7 +44,7 @@ def main():
     model.add(Dense(64))
     model.add(Activation("relu"))
     #model.add(Dropout(1.0))
-    model.add(Dense(2, activation=("linear")))
+    model.add(Dense(classes, activation=("softmax")))
 
     adam = Adam(learning_rate=lr)
 
