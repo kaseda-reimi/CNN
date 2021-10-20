@@ -32,7 +32,7 @@ def main():
     # モデルの定義
     model = Sequential()
 
-    model.add(Conv2D(32,(2, 4),input_shape=(y_len,x_len,1)))
+    model.add(Conv2D(32,(2, 4),input_shape=(y_len,x_len)))
     model.add(Activation("relu"))
     model.add(MaxPool2D(pool_size=(1,2)))
 
@@ -56,7 +56,7 @@ def main():
     )
 
     history = model.fit(
-        x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, validation_split=0.1
+        x_train, y_train, batch_size=batch_size, epochs=epochs, verbose=1, validation_data=(x_test, y_test)
     )
 
     score = model.evaluate(x_test, y_test, verbose=1)
