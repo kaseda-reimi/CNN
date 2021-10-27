@@ -26,10 +26,11 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
     model = Sequential()
-    model.add(InputLayer(input_shape=(input_size,)))
-    model.add(Dense(input_size/2, activation = "relu"))
-    model.add(Dense(input_size/3, activation = "relu"))
-    model.add(Dense(input_size/4, activation = "relu"))
+    model.add(InputLayer(input_shape=(input_size,)))#240
+    model.add(Dense(input_size/2, activation = "relu"))#120
+    model.add(Dense(input_size/2, activation = "relu"))#60
+    model.add(Dense(input_size/2, activation = "relu"))#30
+    model.add(Dense(input_size/3, activation = "relu"))#10
     model.add(Dense(2, activation='linear'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
