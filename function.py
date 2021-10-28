@@ -6,6 +6,10 @@ def get_data():
     path = os.getcwd()+'/data_r2.txt'
     with open (path) as f:
         l = f.read().split()
+    path = os.getcwd()+'/data.txt'
+    with open (path) as f:
+        l.extend(f.read().split())
+    
     data = [float(s) for s in l]
     data = np.array(data).reshape(-1, x_len*y_len+2)
     structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
@@ -23,7 +27,7 @@ def normalize(x):
     return normalized_x
 
 def evaluation(y):
-    E = y[0] / y[1]
+    E = y[0] - 5*y[1]
     return E
 
 def write_data(path, data):
@@ -53,3 +57,5 @@ if __name__ == '__main__':
     x, y = get_data()
     E, i = search_E_max(y)
     print(y[i])
+    
+    
