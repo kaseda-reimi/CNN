@@ -3,7 +3,7 @@ import numpy as np
 from design import x_len, y_len
 
 def get_data():
-    path = os.getcwd()+'/data_r.txt'
+    path = os.getcwd()+'/data_r2.txt'
     with open (path) as f:
         l = f.read().split()
     data = [float(s) for s in l]
@@ -51,5 +51,5 @@ def search_E_max(data):
 
 if __name__ == '__main__':
     x, y = get_data()
-    write_data("/design.txt",x)
-    
+    E, i = search_E_max(y)
+    print(y[i])
