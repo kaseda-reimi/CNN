@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 from design import x_len, y_len
 
 def get_data():
@@ -27,7 +28,7 @@ def normalize(x):
     return normalized_x
 
 def evaluation(y):
-    E = y[0] - 5*y[1]
+    E = y[0] - y[1]
     return E
 
 def write_data(path, data):
@@ -50,12 +51,39 @@ def search_E_max(data):
             max_index = i
     return E_max, max_index
 
+def data_bunseki():
+    path = os.getcwd()+'/data_r2.txt'
+    with open (path) as f:
+        l = f.read().split()
+    data = [float(s) for s in l]
+    data = np.array(data).reshape(-1, x_len*y_len+2)
+    output = data[:,x_len*y_len:].reshape(-1, 2)
+    output_ratio = np.zeros([output.shape[0],2])
+    output_ratio[:,0] = 20 * np.log10(output[:,0]/output[:,1]) #訂正後消光比
+
+    path = os.getcwd()+'/data_r.txt'
+    with open (path) as f:
+        l = f.read().split()
+    data = [float(s) for s in l]
+    data = np.array(data).reshape(-1, x_len*y_len+2)
+    output = data[:,x_len*y_len:].reshape(-1, 2)
+    output_ratio[:,1] = 20 * np.log10(output[:,0]/output[:,1]) #訂正前消光比
+
+    return output_ratio
+
 
 
 
 if __name__ == '__main__':
-    x, y = get_data()
-    E, i = search_E_max(y)
-    print(y[i])
+    output_ratio = data_bunseki()
+    #print(np.amax(output_ratio))
+    x = list(range(-3, 13, 1))
+    y = np.zeros([2,17])
+    for i in range(output_ratio.shape[0]):
+        a = output_ratio[i][0]//1
+        y[0][a+3] += 1
+        b = output_ratio[i][1]//1
+        y[1][b+3] += 1
     
-    
+    plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
+    plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--");
