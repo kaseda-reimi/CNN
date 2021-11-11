@@ -83,7 +83,7 @@ if __name__ == '__main__':
         a = output_ratio[i][0]//1 + 3
         print(a)
         y[0][int(a)] += 1
-        Eb = output_ratio[i][1]//1 + 3
+        b = output_ratio[i][1]//1 + 3
         y[1][int(b)] += 1
     
     plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
