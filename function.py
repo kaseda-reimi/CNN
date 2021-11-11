@@ -77,7 +77,7 @@ def data_bunseki():
 if __name__ == '__main__':
     output_ratio = data_bunseki()
     #print(np.amax(output_ratio))
-    x = list(range(-3, 13, 1))
+    x = list(range(-3, 14, 1))
     y = np.zeros([2,17])
     for i in range(output_ratio.shape[0]):
         a = output_ratio[i][0]//1 + 3
