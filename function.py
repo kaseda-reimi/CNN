@@ -86,4 +86,5 @@ if __name__ == '__main__':
         y[1][b+3] += 1
     
     plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
-    plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--");
+    plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--")
+    plt.savefig("data_hikaku.png")
