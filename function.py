@@ -80,10 +80,11 @@ if __name__ == '__main__':
     x = list(range(-3, 13, 1))
     y = np.zeros([2,17])
     for i in range(output_ratio.shape[0]):
-        a = output_ratio[i][0]//1
-        y[0][a+3] += 1
-        b = output_ratio[i][1]//1
-        y[1][b+3] += 1
+        a = output_ratio[i][0]//1 + 3
+        print(a)
+        y[0][int(a)] += 1
+        Eb = output_ratio[i][1]//1 + 3
+        y[1][int(b)] += 1
     
     plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
     plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--")
