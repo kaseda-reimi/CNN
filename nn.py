@@ -10,7 +10,7 @@ import numpy as np
 from design import x_len, y_len #40,6
 
 input_size = y_len*x_len
-epochs = 10000
+epochs = 5000
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
