@@ -62,7 +62,9 @@ def main():
     predict = model.predict(x_test)
     for i in range(y_test.shape[0]):
         print(y_test[i], predict[i])
-    print(np.corrcoef(y_test, predict))
+    print(np.corrcoef(y_test[:,0], predict[:,0]))
+    print(np.corrcoef(y_test[:,1], predict[:,1]))
+
 
 if __name__ == '__main__':
     main()
