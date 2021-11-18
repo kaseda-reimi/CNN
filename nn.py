@@ -28,7 +28,7 @@ def main():
 
     model = Sequential()
     model.add(InputLayer(input_shape=(input_size,)))#240
-    model.add(Dense(input_size/2, activation = "relu"))#120
+    model.add(Dense(input_size/1, activation = "relu"))#120
     model.add(Dense(input_size/2, activation = "relu"))#120
     model.add(Dense(input_size/2, activation = "relu"))#120
     model.add(Dense(input_size/3, activation = "relu"))#80
