@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import os
 import function as fc
+import numpy as np
 from design import x_len, y_len #40,6
 
 input_size = y_len*x_len
@@ -61,6 +62,7 @@ def main():
     predict = model.predict(x_test)
     for i in range(y_test.shape[0]):
         print(y_test[i], predict[i])
+    np.corrcoef(y_test, predict)
 
 if __name__ == '__main__':
     main()
