@@ -64,7 +64,7 @@ def main():
         print(y_test[i], predict[i])
         
     print(np.corrcoef(y_test[:,0].reshape(1,-1), predict[:,0].reshape(1,-1)))
-    #print(np.corrcoef(y_test[:,1], predict[:,1]))
+    print(np.corrcoef(y_test[:,1], predict[:,1]))
 
 
 if __name__ == '__main__':
