@@ -21,8 +21,8 @@ def main():
     input_data = input_data.reshape(-1, input_size)
     #正規化
     input_data /= 2
-    #output_data[:,0] = fc.normalize(output_data[:,0])
-    #output_data[:,1] = fc.normalize(output_data[:,1])
+    output_data[:,0] = fc.normalize(output_data[:,0])
+    output_data[:,1] = fc.normalize(output_data[:,1])
 
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
