@@ -66,6 +66,8 @@ def main():
     
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
     ax.scatter(y_test[:,0],predict[:,0], c='red')
     ax.scatter(y_test[:,1],predict[:,1], c='blue')
     ax.set_xlabel('simulation')
