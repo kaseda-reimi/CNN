@@ -21,8 +21,8 @@ def main():
     input_data = input_data.reshape(-1, input_size)
     #正規化
     input_data /= 2
-    output_data[:,0] = fc.normalize(output_data[:,0])
-    output_data[:,1] = fc.normalize(output_data[:,1])
+    output_data[:,0], min0, max0 = fc.normalize(output_data[:,0])
+    output_data[:,1], min1, max1 = fc.normalize(output_data[:,1])
 
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
@@ -65,18 +65,32 @@ def main():
     for i in range(y_test.shape[0]):
         print(y_test[i], predict[i])
     
+        
+    print(np.corrcoef(y_test[:,0], predict[:,0]))
+    print(np.corrcoef(y_test[:,1], predict[:,1]))
+
+    y_test[:,0] = y[:,0] * (max0 - min0) + min0
+    predict[:,0] = predict[:,0] * (max0 - min0) + min0
+    y_test[:,1] = y[:,1] * (max1 - min1) + min1
+    predict[:,1] = predict[:,1] * (max1 - min1) + min1
+    simulation = np.zeros([y_test.shape])
+    simulation[:,0] = 2 * np.log10(y_test[:,0]/y_test[:,1])
+    simulation[:,1] = 2 * np.log10(1/y_test[:,0])
+    nn = np.zeros([predict.shape])
+    nn[:,0] = 2 * np.log10(y_test[:,0]/y_test[:,1])
+    nn[:,1] = 2 * np.log10(1/y_test[:,0])
+    print(np.corrcoef(y_test[:,0], predict[:,0]))
+    print(np.corrcoef(y_test[:,1], predict[:,1]))
+
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
-    ax.scatter(y_test[:,0],predict[:,0], c='red')
-    ax.scatter(y_test[:,1],predict[:,1], c='blue')
+    ax.scatter(simulation[:,0],nn[:,0], c='red')
+    ax.scatter(simulation[:,1],nn[:,1], c='blue')
     ax.set_xlabel('simulation')
     ax.set_ylabel('NN')
     plt.savefig("scatter.png")
-        
-    print(np.corrcoef(y_test[:,0].reshape(1,-1), predict[:,0].reshape(1,-1)))
-    print(np.corrcoef(y_test[:,1], predict[:,1]))
 
 
 if __name__ == '__main__':
