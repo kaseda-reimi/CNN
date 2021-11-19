@@ -20,20 +20,26 @@ def get_data():
     output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
     #上下反転してデータを増やす
     structure = np.concatenate([structure, np.flip(structure,1)])
-    output_ratio = np.concatenate([output_ratio, output_ratio])
-    #output = np.concatenate([output, output])
-    return structure, output_ratio
+    #output_ratio = np.concatenate([output_ratio, output_ratio])
+    output = np.concatenate([output, output])
+    return structure, output#_ratio
 
 def get_data_half():
-    x_len = 20
+    half_x = 20
     path = os.getcwd()+'/data_half.txt'
     with open (path) as f:
         l = f.read().split()
     data = [float(s) for s in l]
-    data = np.array(data).reshape(-1, x_len*y_len+2)
-    structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
-    output = data[:,x_len*y_len:].reshape(-1, 2)
-    #output_ratio = output**2
+    data = np.array(data).reshape(-1, half_x*y_len+2)
+    structure = data[:,:half_x*y_len].reshape(-1, y_len, half_x)
+    output = data[:,half_x*y_len:].reshape(-1, 2)
+    input = np.zeros([structure.shape[0], y_len, x_len])
+    for n in range(structure.shape[0]):
+        for j in range(y_len):
+            for i in range(half_x):
+                input[n][j][i*2] = structure[n][j][i]
+                input[n][j][i*2-1] = structure[n][j][i]
+
     output_ratio = np.zeros([output.shape[0],2])
     output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
@@ -41,7 +47,7 @@ def get_data_half():
 
 def normalize(x):
     normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
-    return normalized_x
+    return normalized_x, np.amin(x), np.amax(x)
 
 def evaluation(y):
     E = y[0] - y[1]
