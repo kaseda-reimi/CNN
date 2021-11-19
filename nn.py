@@ -32,8 +32,8 @@ def main():
     model.add(Dense(input_size/1, activation = "relu"))#120
     model.add(Dense(input_size/1, activation = "relu"))#120
     model.add(Dense(input_size/1, activation = "relu"))#80
+    model.add(Dense(input_size/1, activation = "relu"))
     model.add(Dense(input_size/2, activation = "relu"))
-    model.add(Dense(input_size/4, activation = "relu"))
     model.add(Dense(2, activation='linear'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
