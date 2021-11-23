@@ -23,7 +23,7 @@ def create_first_design(mode):
     design[1:y_len+1, 1:x_len+1] = 0
     #最初の形を決める
     if mode == 0:
-        design = fc.design
+        design = fc.design()
     if mode == 1:
         #design[:, 13] = 1
         design[1:7,5:18] = 2
