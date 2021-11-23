@@ -373,9 +373,10 @@ def main():
 
 if __name__ == '__main__':
     map = create_first_design(1)
-    print(map)
+    print(map[1:y_len+1,1:x_len+1])
 
-    #neighbors = create_neighbors(map)
+    neighbors = create_neighbors(map)
+    print(map)
     #neighbors = create_first_design()
     #print(neighbors)
     #path = '/data_result.txt'
