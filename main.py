@@ -358,15 +358,14 @@ def main():
 
 if __name__ == '__main__':
     design = create_first_design(0)
-    map = design
     neighbors = create_neighbors(design)
-    print(map)
+    print(design)
     print(neighbors)
-    print(np.all(map==neighbors))
-    map[0,0] = 0
-    print(map)
+    print(np.all(design==neighbors))
+    design[0,0] = 0
+    print(design)
     print(neighbors)
-    print(np.all(map==neighbors))
+    print(np.all(design==neighbors))
     #neighbors = create_first_design()
     #print(neighbors)
     #path = '/data_result.txt'
