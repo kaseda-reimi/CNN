@@ -68,24 +68,26 @@ def main():
         
     print(np.corrcoef(y_test[:,0], predict[:,0]))
     print(np.corrcoef(y_test[:,1], predict[:,1]))
-
+    #非正規化
     y_test[:,0] = y_test[:,0] * (max0 - min0) + min0
     predict[:,0] = predict[:,0] * (max0 - min0) + min0
     y_test[:,1] = y_test[:,1] * (max1 - min1) + min1
     predict[:,1] = predict[:,1] * (max1 - min1) + min1
+
     simulation = np.zeros(y_test.shape)
     simulation[:,0] = 2 * np.log10(y_test[:,0]/y_test[:,1])
     simulation[:,1] = 2 * np.log10(1/y_test[:,0])
     nn = np.zeros(predict.shape)
     nn[:,0] = 2 * np.log10(predict[:,0]/predict[:,1])
     nn[:,1] = 2 * np.log10(1/predict[:,0])
+
     print(np.corrcoef(simulation[:,0], nn[:,0]))
     print(np.corrcoef(simulation[:,1], nn[:,1]))
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    #ax.set_xlim(0, 1)
+    #ax.set_ylim(0, 1)
     ax.scatter(simulation[:,0],nn[:,0], c='red')
     ax.scatter(simulation[:,1],nn[:,1], c='blue')
     ax.set_xlabel('simulation')
