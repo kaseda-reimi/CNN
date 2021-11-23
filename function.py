@@ -1,7 +1,7 @@
 import os
 import numpy as np
 #import matplotlib.pyplot as plt
-from design import x_len, y_len
+from nn import x_len, y_len
 
 def get_data():
     path = os.getcwd()+'/data_r2.txt'
@@ -93,12 +93,91 @@ def search_E_max(data):
             max_index = i
     return E_max, max_index
 
+def design():
+    EA_min = x_len * y_len * 0.05
+    EA_max = x_len * y_len * 0.4
+    EA = np.random.randint(EA_min, EA_max)
+    design = np.zeros((y_len,x_len))
+    #初期位置
+    x = np.random.randint(0, x_len)
+    y = 0
+    #形成
+    for i in range(1,EA):
+        design[y][x] = 2
+        #周囲を1に
+        if 0<y<y_len :
+            if design[y-1][x]==0 :
+                design[y-1][x] = 1
+        if y<y_len-1 :
+            if design[y+1][x]==0 :
+                design[y+1][x] = 1
+        if 0<x<x_len :
+            if design[y][x-1]==0 :
+                design[y][x-1] = 1
+        if x<x_len-1 :
+            if design[y][x+1]==0 :
+                design[y][x+1] = 1
+        order = np.random.rand(4)
+        #1：上, 2：右, 3：下, 4：左
+        direction_x = [x, x+1, x, x-1]
+        direction_y = [y-1, y, y+1, y]
+        count = 0
+        while count < 5:
+            direction = np.argmax(order)
+            _x = direction_x[direction]
+            _y = direction_y[direction]
+
+            if 0<=_x<x_len and 0<=_y<y_len/2 :
+                if design[_y][_x] == 1 :
+                    y, x = _y, _x
+                    break
+            #else
+            order[direction] = 0
+            count = count + 1
+            if count == 4:
+                for i in range(0,x_len):
+                    if design[y][i] == 1:
+                        x = i
+                        break
+                if design[y][x] != 1:
+                    for j in range(0, y_len/2):
+                        if design[j][x] == 1:
+                            y = j
+                            break
+                #保険
+                if design[y][x] != 1:
+                    flag = False
+                    print("例外")
+                    for i in range(0, x_len):
+                        for j in range(0, y_len/2):
+                            if design[j][i] == 1:
+                                x, y = i, j
+                                flag = True
+                                break
+                        if flag:
+                            break
+                count = 5
+    #１で囲む
+    print(EA)
+    design = np.insert(design, y_len, 1, axis=0)
+    design = np.insert(design, 0, 1, axis=0)
+    design = np.insert(design, x_len, 1, axis=1)
+    design = np.insert(design, 0, 1, axis=1)
+    #穴埋め
+    groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
+    num = 0
+    for n in groove:
+        area = design[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
+        if np.prod(area) > 0:
+            area[1][1] = 2
+            num += 1
+    return design[1:y_len+1,1:x_len+1]
 
 
 
 
 if __name__ == '__main__':
-    input, output1= get_data()
+    #input, output1= get_data()
     #print(np.amin(output1))
     #print(np.amax(output1))
     #x = list(range(0, 10, 10))
@@ -109,8 +188,4 @@ if __name__ == '__main__':
     #    b = output1[i][1]//0.1
     #    y[1][int(b)] += 1
     #print(y)
-    #plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
-    #plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--")
-    #plt.savefig("data_hikaku.png")
-    #print(input[0])
-    print(input.shape[0])
+    print(design())
