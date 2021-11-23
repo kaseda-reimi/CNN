@@ -15,9 +15,9 @@ def get_data():
     data = np.array(data).reshape(-1, x_len*y_len+2)
     structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
     output = data[:,x_len*y_len:].reshape(-1, 2)
-    output_ratio = np.zeros([output.shape[0],2])
-    output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
-    output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
+    #output_ratio = np.zeros([output.shape[0],2])
+    #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
+    #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
     #上下反転してデータを増やす
     structure = np.concatenate([structure, np.flip(structure,1)])
     #output_ratio = np.concatenate([output_ratio, output_ratio])
@@ -37,13 +37,30 @@ def get_data_half():
     for n in range(structure.shape[0]):
         for j in range(y_len):
             for i in range(half_x):
-                input[n][j][i*2] = structure[n][j][i]
-                input[n][j][i*2-1] = structure[n][j][i]
-
+                input[n][j][i*2:i*2+2] = structure[n][j][i]
+    for n in range(input.shape[0]):
+        for j in range(y_len):
+            for i in range(x_len):
+                if input[n,j,i] == 1:
+                    up = j-1
+                    down = j+2
+                    left = i-1
+                    right = i+2
+                    if up < 0:
+                        up = 0
+                    if down > y_len:
+                        down = y_len
+                    if left < 0:
+                        left = 0
+                    if right > x_len:
+                        right = x_len
+                    if np.prod(input[n,up:down,left:right]-2) != 0:
+                        input[n][j][i] = 0
+                    
     output_ratio = np.zeros([output.shape[0],2])
     output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
-    return structure, output, output_ratio
+    return input, output, output_ratio
 
 def normalize(x):
     normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
@@ -78,20 +95,19 @@ def search_E_max(data):
 
 
 if __name__ == '__main__':
-    input, output1 = get_data()
-    print(np.amin(output1))
-    print(np.amax(output1))
-    #print(input.shape)
-    #print(output1[1])
-    x = list(range(0, 10, 10))
-    y = np.zeros([2,10])
-    for i in range(output1.shape[0]):
-        a = output1[i][0]//0.1
-        y[0][int(a)] += 1
-        b = output1[i][1]//0.1
-        y[1][int(b)] += 1
-    print(y)
-
+    input, output1, output2 = get_data_half()
+    #print(np.amin(output1))
+    #print(np.amax(output1))
+    #x = list(range(0, 10, 10))
+    #y = np.zeros([2,10])
+    #for i in range(output1.shape[0]):
+    #    a = output1[i][0]//0.1
+    #    y[0][int(a)] += 1
+    #    b = output1[i][1]//0.1
+    #    y[1][int(b)] += 1
+    #print(y)
     #plt.plot(x, y[0], marker="o", color = "red", linestyle = "--")
     #plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--")
     #plt.savefig("data_hikaku.png")
+    #print(input[0])
+    print(input[0])
