@@ -372,7 +372,7 @@ def main():
 
 
 if __name__ == '__main__':
-    map = create_first_design(0)
+    map = create_first_design(1)
     print(map[1:y_len+1,1:x_len+1])
 
     neighbors = create_neighbors(map)
