@@ -359,9 +359,8 @@ def main():
 
 if __name__ == '__main__':
     map = create_first_design(0)
-    print(map[1:y_len+1,1:x_len+1])
-
     neighbors = create_neighbors(map)
+    print(map)
     print(neighbors)
     print(np.all(map==neighbors))
     #neighbors = create_first_design()
