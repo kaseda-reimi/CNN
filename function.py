@@ -15,6 +15,9 @@ def get_data():
     data = np.array(data).reshape(-1, x_len*y_len+2)
     structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
     output = data[:,x_len*y_len:].reshape(-1, 2)
+    half_str, half_out = get_data_half()
+    structure = np.concatenate([structure, half_str])
+    output = np.concatenate([output, half_out])
     #output_ratio = np.zeros([output.shape[0],2])
     #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
@@ -60,7 +63,7 @@ def get_data_half():
     output_ratio = np.zeros([output.shape[0],2])
     output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
-    return input, output, output_ratio
+    return input, output#, output_ratio
 
 def normalize(x):
     normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
@@ -95,7 +98,7 @@ def search_E_max(data):
 
 
 if __name__ == '__main__':
-    input, output1, output2 = get_data_half()
+    input, output1= get_data()
     #print(np.amin(output1))
     #print(np.amax(output1))
     #x = list(range(0, 10, 10))
@@ -110,4 +113,4 @@ if __name__ == '__main__':
     #plt.plot(x, y[1], marker="o", color = "blue", linestyle = "--")
     #plt.savefig("data_hikaku.png")
     #print(input[0])
-    print(input[0])
+    print(input.shape[0])
