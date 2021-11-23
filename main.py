@@ -59,7 +59,7 @@ def create_neighbors(design):
         
 
         
-        change_area = design[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
+        change_area = neighbors[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
 
         #変更
         print(cp_x,cp_y,cl)
@@ -331,7 +331,6 @@ def create_neighbors(design):
         print(change_area,cl)
         neighbors[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
 
-    print(design)
     #穴埋め
     groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
     for n in groove:
