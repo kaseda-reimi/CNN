@@ -71,7 +71,6 @@ def create_neighbors(design):
         #分岐
         if pattern < 3:
             change_area[1][1] = 2
-        
         elif pattern == 3:
             if subpattern == 0:#BF
                 #F
@@ -109,7 +108,6 @@ def create_neighbors(design):
                             change_area[1][2] = 1
                         elif _change_area[2][0] == 1:
                             change_area[2][1] = 1
-            
             elif subpattern == 1:#AD
                 #D
                 if np.sum(class_arr3*_change_area)==1 and np.sum(class_arr4*_change_area)==1:
@@ -129,7 +127,6 @@ def create_neighbors(design):
                 #A
                 else:
                     change_area[1][1] = 2
-            
             elif subpattern == 2:#CE
                 #E
                 dise = random.randint(0,1)
@@ -152,7 +149,6 @@ def create_neighbors(design):
                     change_area[1][1] == change_area[2][1]
                 elif np.sum(class_arr4*_change_area) == 1:
                     change_area[1][1] = change_area[0][1]
-            
         elif pattern == 4:
             if subpattern == 0:#G　未実装
                 print("===4-G===")
@@ -168,7 +164,6 @@ def create_neighbors(design):
                 elif _change_area[2][2] == 0:
                     _change_area[:2,:2] = 1
                     _change_area[0][0] = 0
-            
             elif subpattern == 1:#ADFH
                 if np.sum(class_arr3*_change_area) >= 2:
                     change_area[1][1] = change_area[2][1]
@@ -206,7 +201,6 @@ def create_neighbors(design):
                         change_area[2][1] = 1
                     elif _change_area[1][0] == 1:
                         print("===4-H===")
-            
             elif subpattern == 2:#BCEJ
                 #E
                 if np.sum(class_arr5*_change_area) == 2:
@@ -259,7 +253,6 @@ def create_neighbors(design):
                         elif dise == 0:
                             change_area[2][1] = 1
                             change_area[1][1] = change_area[1][2]
-            
             elif subpattern == 3:#I:
                 if np.sum(class_arr5*_change_area) == 2:
                     if _change_area[0][1] == 1:
@@ -271,11 +264,9 @@ def create_neighbors(design):
                         change_area[1][1] = change_area[1][2]
                     elif _change_area[1][2] == 1:
                         change_area[1][1] = change_area[1][0]
-        
         elif pattern == 5:
             if subpattern == 0:#L 未実装
                 print("===5-L===")
-            
             elif subpattern == 1:#BJ J未実装
                 #B
                 if np.sum(class_arr3*_change_area)==3 or np.sum(class_arr4*_change_area)==3:
@@ -295,7 +286,6 @@ def create_neighbors(design):
                 #J
                 else:
                     print("===5-J===")
-
             elif subpattern == 2:#ACEFHIK　CIKのみ実装
                 #CIK
                 if np.sum(class_arr5*_change_area) == 2:
@@ -332,14 +322,13 @@ def create_neighbors(design):
                         elif dise == 1:
                             change_area[1][2] = 1
                             change_area[1][1] = change_area[1][0]
-                
             #elif subpattern == 3:#DG
-        
         if pattern > 5:#else:
             print(pattern,"が出ました")
             cl -= 1
 
         print(change_area,cl)
+        design[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
 
     print(design)
     #穴埋め
