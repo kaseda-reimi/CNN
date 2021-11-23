@@ -1,10 +1,10 @@
 import numpy as np
 import random
-#from tensorflow.keras.models import load_model
-#from nn import model_path
+from tensorflow.keras.models import load_model
+from nn import model_path
 #from cnn import model_path
-import design
-from design import x_len, y_len
+import function as fc
+from nn import x_len, y_len
 import os
 
 epochs = 1
@@ -18,15 +18,18 @@ class_arr4 = np.array([[0,0,0],[0,0,0],[1,1,1]])
 class_arr5 = np.array([[0,0,0],[1,0,1],[0,0,0]])
 
 #初期個体生成
-def create_first_design():
+def create_first_design(mode):
     design = np.ones((y_len+2,x_len+2))
     design[1:y_len+1, 1:x_len+1] = 0
     #最初の形を決める
-    #design[:, 13] = 1
-    design[1:7,5:18] = 2
-    design[1:7,4] = 1
-    design[1:7,18] = 1
-    design[7,5:18] = 1
+    if mode == 0:
+        design = fc.design
+    if mode == 1:
+        #design[:, 13] = 1
+        design[1:7,5:18] = 2
+        design[1:7,4] = 1
+        design[1:7,18] = 1
+        design[7,5:18] = 1
     return design
 
 #近傍解生成
@@ -356,7 +359,7 @@ def main():
     #初期個体生成
     design = create_first_design()
     #評価
-    #model = load_model(model_path)
+    model = load_model(model_path)
     #eval = model.predict(design)
 
     for i in range(epochs):
@@ -369,19 +372,18 @@ def main():
 
 
 if __name__ == '__main__':
-    map = design.main()
-    #map = create_first_design()
-    #print(map)
+    map = create_first_design(1)
+    print(map)
 
-    neighbors = create_neighbors(map)
+    #neighbors = create_neighbors(map)
     #neighbors = create_first_design()
-    print(neighbors)
-    path = '/data_result.txt'
-    data = neighbors[1:y_len+1, 1:x_len+1]
-    with open(os.getcwd()+path, mode='w') as f:
-        for i in range(data.shape[0]):
-            for n in data[i]:
-                f.write(str(n)+" ")
-            f.write('\n')
-        f.write('\n')
-    #fc.write_data('/data_no.txt', neighbors[1:y_len+1, 1:x_len+1])
+    #print(neighbors)
+    #path = '/data_result.txt'
+    #data = neighbors[1:y_len+1, 1:x_len+1]
+    #with open(os.getcwd()+path, mode='w') as f:
+    #    for i in range(data.shape[0]):
+    #        for n in data[i]:
+    #            f.write(str(n)+" ")
+    #        f.write('\n')
+    #    f.write('\n')
+    ##fc.write_data('/data_no.txt', neighbors[1:y_len+1, 1:x_len+1])
