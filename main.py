@@ -376,7 +376,7 @@ if __name__ == '__main__':
     print(map[1:y_len+1,1:x_len+1])
 
     neighbors = create_neighbors(map)
-    print(map)
+    print(neighbors)
     #neighbors = create_first_design()
     #print(neighbors)
     #path = '/data_result.txt'
