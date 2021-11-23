@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import os
 import function as fc
+from functin import y_len, x_len
 import numpy as np
 
 input_size = y_len*x_len
