@@ -1,7 +1,9 @@
 import os
 import numpy as np
 #import matplotlib.pyplot as plt
-from nn import x_len, y_len
+
+x_len = 40
+y_len = 6
 
 def get_data():
     path = os.getcwd()+'/data_r2.txt'
