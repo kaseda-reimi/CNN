@@ -1,10 +1,9 @@
 import numpy as np
 import random
 from tensorflow.keras.models import load_model
-from nn import model_path
+from nn import model_path, x_len, y_len
 #from cnn import model_path
 import function as fc
-from nn import x_len, y_len
 import os
 
 epochs = 1
