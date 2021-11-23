@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import os
 import function as fc
 import numpy as np
-from design import x_len, y_len #40,6
 
+x_len = 40
+y_len = 6
 input_size = y_len*x_len
 epochs = 1000
 batch_size = 128
