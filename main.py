@@ -363,7 +363,7 @@ if __name__ == '__main__':
     print(map)
     print(neighbors)
     print(np.all(map==neighbors))
-    map[0][0] = 0
+    map[0,0] = 0
     print(map)
     print(neighbors)
     print(np.all(map==neighbors))
