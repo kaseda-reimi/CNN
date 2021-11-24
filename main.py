@@ -21,21 +21,26 @@ class_arr5 = np.array([[0,0,0],[1,0,1],[0,0,0]])
 
 #初期個体生成
 def create_first_design(mode):
-    design = np.ones((y_len+2,x_len+2))
-    design[1:y_len+1, 1:x_len+1] = 0
+    design = np.zeros((y_len,x_len))
     #最初の形を決める
     if mode == 0:
         design = fc.design()
     if mode == 1:
         #design[:, 13] = 1
-        design[1:7,5:18] = 2
-        design[1:7,4] = 1
-        design[1:7,18] = 1
-        design[7,5:18] = 1
+        design[0:7,5:18] = 2
+        design[0:7,4] = 1
+        design[0:7,18] = 1
+        design[0,5:18] = 1
     return design
 
 #近傍解生成
 def create_neighbor(design):
+    #1で囲む
+    design = np.insert(design, y_len, 1, axis=0)
+    design = np.insert(design, 0, 1, axis=0)
+    design = np.insert(design, x_len, 1, axis=1)
+    design = np.insert(design, 0, 1, axis=1)
+
     pattern = 1
     neighbor = copy.copy(design)
     for cl in range (change_level):
@@ -339,15 +344,15 @@ def create_neighbor(design):
         area = neighbor[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
         if np.prod(area) > 0:
             area[1][1] = 2
-    return neighbor
+    return neighbor[1:y_len+1, 1:x_len+1]
 
 
 def main():
     #初期個体生成
-    design = create_first_design()
+    design = create_first_design(0)
     #評価
     model = load_model(model_path)
-    #eval = model.predict(design)
+    eval = model.predict(design)
 
     for i in range(epochs):
         #近傍解生成
@@ -361,8 +366,8 @@ def main():
 if __name__ == '__main__':
     design = create_first_design(0)
     neighbor = create_neighbor(design)
-    print(design[1:y_len+1, 1:x_len+1])
-    print(neighbor[1:y_len+1, 1:x_len+1])
+    print(design)
+    print(neighbor)
     print(np.all(design==neighbor))
     #neighbors = create_first_design()
     #print(neighbors)
