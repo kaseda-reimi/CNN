@@ -83,7 +83,7 @@ def evaluation(y):
     extinction = 20 * np.log10(y[0,0]/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
     E = extinction - loss
-    return E
+    return E, extinction, loss
 
 def write_data(path, data):
     with open(os.getcwd()+path, mode='w') as f:
