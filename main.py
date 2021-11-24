@@ -353,7 +353,8 @@ def main():
     design = create_first_design(0)
     #評価
     model = load_model(model_path)
-    eval = fc.evalation(model.predict(design))
+    perform = model.predict(design)
+    eval = fc.evalation(perform)
 
     for i in range(epochs):
         best_design = design
