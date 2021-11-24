@@ -355,6 +355,8 @@ def main():
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
     eval = fc.evaluation(perform)
+    print(design)
+    print(eval)
 
     for i in range(epochs):
         best_design = design
