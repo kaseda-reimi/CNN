@@ -9,7 +9,7 @@ import function as fc
 from function import x_len, y_len
 
 
-epochs = 1
+epochs = 50
 group = 10
 change_level = 3
 
@@ -368,8 +368,8 @@ def main():
             if nei_eval > best_eval:
                 best_eval = nei_eval
                 best_design = neighbor
-            print(n)
         design = best_design
+        print(i)
     
     print(design)
     print(best_eval)
