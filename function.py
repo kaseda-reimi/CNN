@@ -173,7 +173,7 @@ def design():
         if np.prod(area) > 0:
             area[1][1] = 2
             num += 1
-    return design
+    return design[1:y_len+1, 1:x_len+1]
 
 
 
