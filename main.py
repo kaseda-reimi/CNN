@@ -70,13 +70,13 @@ def create_neighbor(design):
         change_area = neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
 
         #変更
-        print(cp_x,cp_y,cl)
-        print(change_area)
+        #print(cp_x,cp_y,cl)
+        #print(change_area)
         _change_area = np.where(change_area>1, 0, change_area)
         pattern = np.sum(_change_area)
-        print("pattern",pattern)
+        #print("pattern",pattern)
         subpattern = np.sum(class_arr2*_change_area)
-        print("subpattern", subpattern)
+        #print("subpattern", subpattern)
         #分岐
         if pattern < 3:
             change_area[1][1] = 2
@@ -336,7 +336,7 @@ def create_neighbor(design):
             print(pattern,"が出ました")
             cl -= 1
 
-        print(change_area,cl)
+        #print(change_area,cl)
         neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
 
     #穴埋め
