@@ -354,7 +354,8 @@ def main():
     #評価
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
-    eval = fc.evaluation(perform)
+    print(perform)
+    #eval = fc.evaluation(perform)
 
     for i in range(epochs):
         best_design = design
@@ -362,7 +363,7 @@ def main():
         for n in range(group):
             neighbor = create_neighbor(design)
             nei_perform = model.predict(neighbor.reshape(1,-1))
-            nei_eval = fc.evaluation(nei_perform)
+            #nei_eval = fc.evaluation(nei_perform)
             if nei_eval > best_eval:
                 best_eval = nei_eval
                 best_design = neighbor
