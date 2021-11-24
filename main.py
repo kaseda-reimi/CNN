@@ -361,8 +361,8 @@ def main():
 if __name__ == '__main__':
     design = create_first_design(0)
     neighbor = create_neighbor(design)
-    print(design)
-    print(neighbor)
+    print(design[1:y_len+1, 1:x_len+1])
+    print(neighbor[1:y_len+1, 1:x_len+1])
     print(np.all(design==neighbor))
     #neighbors = create_first_design()
     #print(neighbors)
