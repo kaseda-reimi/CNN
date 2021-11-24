@@ -35,9 +35,9 @@ def create_first_design(mode):
     return design
 
 #近傍解生成
-def create_neighbors(design):
+def create_neighbor(design):
     pattern = 1
-    neighbors = copy.copy(design)
+    neighbor = copy.copy(design)
     for cl in range (change_level):
         #変更箇所選出
         if pattern > 1:
@@ -61,7 +61,7 @@ def create_neighbors(design):
         
 
         
-        change_area = neighbors[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
+        change_area = neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
 
         #変更
         print(cp_x,cp_y,cl)
@@ -331,15 +331,15 @@ def create_neighbors(design):
             cl -= 1
 
         print(change_area,cl)
-        neighbors[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
+        neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
 
     #穴埋め
     groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
     for n in groove:
-        area = neighbors[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
+        area = neighbor[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
         if np.prod(area) > 0:
             area[1][1] = 2
-    return neighbors
+    return neighbor
 
 
 def main():
@@ -360,10 +360,10 @@ def main():
 
 if __name__ == '__main__':
     design = create_first_design(0)
-    neighbors = create_neighbors(design)
+    neighbor = create_neighbor(design)
     print(design)
-    print(neighbors)
-    print(np.all(design==neighbors))
+    print(neighbor)
+    print(np.all(design==neighbor))
     #neighbors = create_first_design()
     #print(neighbors)
     #path = '/data_result.txt'
