@@ -364,10 +364,6 @@ if __name__ == '__main__':
     print(design)
     print(neighbors)
     print(np.all(design==neighbors))
-    design[0,0] = 0
-    print(design)
-    print(neighbors)
-    print(np.all(design==neighbors))
     #neighbors = create_first_design()
     #print(neighbors)
     #path = '/data_result.txt'
