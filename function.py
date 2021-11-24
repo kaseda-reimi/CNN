@@ -185,7 +185,7 @@ def design():
 
 
 if __name__ == '__main__':
-    #input, output1= get_data()
+    input, output1= get_data()
     #print(np.amin(output1))
     #print(np.amax(output1))
     #x = list(range(0, 10, 10))
