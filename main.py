@@ -365,7 +365,7 @@ def main():
             neighbor = create_neighbor(design)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation(nei_perform)
-            if nei_eval > best_eval:
+            if nei_eval[0] > best_eval[0]:
                 best_eval = nei_eval
                 best_design = neighbor
         design = best_design
