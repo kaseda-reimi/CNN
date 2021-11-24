@@ -10,6 +10,7 @@ from function import x_len, y_len
 
 
 epochs = 1
+group = 10
 change_level = 3
 
 
@@ -352,31 +353,23 @@ def main():
     design = create_first_design(0)
     #評価
     model = load_model(model_path)
-    eval = model.predict(design)
+    eval = fc.evalation(model.predict(design))
 
     for i in range(epochs):
-        #近傍解生成
-        #評価
-        #入れ替え
-        print(i)
+        best_design = design
+        best_eval = eval
+        for n in range(group):
+            neighbor = create_neighbor(design)
+            nei_perform = model.predict(neighbor)
+            nei_eval = fc.evaluation(nei_perform)
+            if nei_eval > best_eval:
+                best_eval = nei_eval
+                best_design = neighbor
+        design = best_design
     
     print(design)
+    print(best_eval)
 
 
 if __name__ == '__main__':
-    design = create_first_design(0)
-    neighbor = create_neighbor(design)
-    print(design)
-    print(neighbor)
-    print(np.all(design==neighbor))
-    #neighbors = create_first_design()
-    #print(neighbors)
-    #path = '/data_result.txt'
-    #data = neighbors[1:y_len+1, 1:x_len+1]
-    #with open(os.getcwd()+path, mode='w') as f:
-    #    for i in range(data.shape[0]):
-    #        for n in data[i]:
-    #            f.write(str(n)+" ")
-    #        f.write('\n')
-    #    f.write('\n')
-    ##fc.write_data('/data_no.txt', neighbors[1:y_len+1, 1:x_len+1])
+    main()
