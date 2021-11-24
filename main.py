@@ -1,11 +1,13 @@
 import numpy as np
 import random
+import os
+import copy
 from tensorflow.keras.models import load_model
 from nn import model_path
 #from cnn import model_path
 import function as fc
 from function import x_len, y_len
-import os
+
 
 epochs = 1
 change_level = 3
@@ -35,7 +37,7 @@ def create_first_design(mode):
 #近傍解生成
 def create_neighbors(design):
     pattern = 1
-    neighbors = design
+    neighbors = copy.copy(design)
     for cl in range (change_level):
         #変更箇所選出
         if pattern > 1:
@@ -334,7 +336,7 @@ def create_neighbors(design):
     #穴埋め
     groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
     for n in groove:
-        area = design[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
+        area = neighbors[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
         if np.prod(area) > 0:
             area[1][1] = 2
     return neighbors
