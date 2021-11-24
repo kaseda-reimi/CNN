@@ -72,7 +72,13 @@ def normalize(x):
     return normalized_x, np.amin(x), np.amax(x)
 
 def evaluation(y):
-    E = y[0] - y[1]
+    #非正規化
+    y[0] = y[0]*(0.65-0.06) + 0.06
+    y[1] = y[1]*(0.65-0.01) + 0.01
+    #消光比計算
+    extinction = 20 * np.log10(y[0]/y[1])
+    loss = 20 * np.log10(1/y[0])
+    E = extinction - loss
     return E
 
 def write_data(path, data):
@@ -190,4 +196,3 @@ if __name__ == '__main__':
     #    b = output1[i][1]//0.1
     #    y[1][int(b)] += 1
     #print(y)
-    print(design())
