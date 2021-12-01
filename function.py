@@ -23,6 +23,7 @@ def get_data():
     #output_ratio = np.zeros([output.shape[0],2])
     #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
+    output[:,1] = output[:,1]/output[:,0]
     #上下反転してデータを増やす
     structure = np.concatenate([structure, np.flip(structure,1)])
     #output_ratio = np.concatenate([output_ratio, output_ratio])
@@ -190,13 +191,13 @@ def design():
 
 if __name__ == '__main__':
     input, output1= get_data()
-    #print(np.amin(output1))
-    #print(np.amax(output1))
-    #x = list(range(0, 10, 10))
-    #y = np.zeros([2,10])
-    #for i in range(output1.shape[0]):
-    #    a = output1[i][0]//0.1
-    #    y[0][int(a)] += 1
-    #    b = output1[i][1]//0.1
-    #    y[1][int(b)] += 1
-    #print(y)
+    print(np.amin(output1))
+    print(np.amax(output1))
+    x = list(range(0, 25, 1))
+    y = np.zeros([2,25])
+    for i in range(output1.shape[0]):
+        a = output1[i][0]//0.1
+        y[0][int(a)] += 1
+        b = output1[i][1]//0.1
+        y[1][int(b)] += 1
+    print(y)
