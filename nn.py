@@ -75,11 +75,11 @@ def main():
     predict[:,1] = predict[:,1] * (max1 - min1) + min1
 
     simulation = np.zeros(y_test.shape)
-    simulation[:,0] = 2 * np.log10(y_test[:,0]/y_test[:,1])
-    simulation[:,1] = 2 * np.log10(1/y_test[:,0])
+    simulation[:,0] = 2 * np.log10(1/y_test[:,0])
+    simulation[:,1] = 2 * np.log10(1/y_test[:,1])
     nn = np.zeros(predict.shape)
-    nn[:,0] = 2 * np.log10(predict[:,0]/predict[:,1])
-    nn[:,1] = 2 * np.log10(1/predict[:,0])
+    nn[:,0] = 2 * np.log10(1/predict[:,0])
+    nn[:,1] = 2 * np.log10(1/predict[:,1])
 
     print(np.corrcoef(simulation[:,0], nn[:,0]))
     print(np.corrcoef(simulation[:,1], nn[:,1]))
