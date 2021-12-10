@@ -11,7 +11,7 @@ from function import x_len, y_len
 
 epochs = 50
 group = 10
-change_level = 5
+change_level = 3
 
 
 #分類に使う配列
