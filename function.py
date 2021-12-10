@@ -83,7 +83,7 @@ def evaluation(y):
     #消光比計算
     extinction = 20 * np.log10(y[0,0]/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
-    E = extinction - 2*loss
+    E = extinction #- 2*loss
     return E, extinction, loss
 
 def write_data(path, data):
