@@ -369,6 +369,7 @@ def main():
                 best_eval = nei_eval
                 best_design = neighbor
         design = best_design
+        eval = best_eval
         print(i, best_eval)
     
     print(start)
