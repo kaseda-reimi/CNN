@@ -11,7 +11,7 @@ from function import x_len, y_len
 
 epochs = 50
 group = 10
-change_level = 3
+change_level = 5
 
 
 #分類に使う配列
@@ -36,14 +36,14 @@ def create_first_design(mode):
 
 #近傍解生成
 def create_neighbor(design):
+    neighbor = copy.copy(design)
     #1で囲む
-    design = np.insert(design, y_len, 1, axis=0)
-    design = np.insert(design, 0, 1, axis=0)
-    design = np.insert(design, x_len, 1, axis=1)
-    design = np.insert(design, 0, 1, axis=1)
+    #neighbor = np.insert(neighbor, y_len, 1, axis=0)
+    neighbor = np.insert(neighbor, 0, 1, axis=0)
+    neighbor = np.insert(neighbor, x_len, 1, axis=1)
+    neighbor = np.insert(neighbor, 0, 1, axis=1)
 
     pattern = 1
-    neighbor = copy.copy(design)
     for cl in range (change_level):
         #変更箇所選出
         if pattern > 1:
@@ -52,14 +52,14 @@ def create_neighbor(design):
             for n in range(next.shape[0]):
                 cp_x = cp_x -1 + next[n][1]
                 cp_y = cp_y -1 + next[n][0]
-                if 0<cp_x<x_len+1 and 0<cp_y<x_len+1:
+                if 0<cp_x<x_len+1 and 0<cp_y<y_len:
                     loop = False
                     break
             if loop:
                 pattern = 1
         if pattern == 1:
             #境界部抽出
-            groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
+            groove = np.array(list(zip(*np.where(neighbor[1:y_len,1:x_len+1]==1))))+1
             #変更箇所選定
             n = random.randrange(0,len(groove))
             cp_x = groove[n][1]
@@ -340,7 +340,7 @@ def create_neighbor(design):
         neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2] = change_area
 
     #穴埋め
-    groove = np.array(list(zip(*np.where(design[1:y_len+1,1:x_len+1]==1))))+1
+    groove = np.array(list(zip(*np.where(neighbor[1:y_len+1,1:x_len+1]==1))))+1
     for n in groove:
         area = neighbor[n[0]-1:n[0]+2, n[1]-1:n[1]+2]
         if np.prod(area) > 0:
