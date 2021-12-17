@@ -193,6 +193,7 @@ if __name__ == '__main__':
     input, output1= get_data()
     print(np.amin(output1))
     print(np.amax(output1))
+    print(output1.shape[0])
     x = list(range(0, 25, 1))
     y = np.zeros([2,25])
     for i in range(output1.shape[0]):
