@@ -25,9 +25,9 @@ def get_data():
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
     output[:,1] = output[:,1]/output[:,0]
     #上下反転してデータを増やす
-    structure = np.concatenate([structure, np.flip(structure,1)])
+    #structure = np.concatenate([structure, np.flip(structure,1)])
     #output_ratio = np.concatenate([output_ratio, output_ratio])
-    output = np.concatenate([output, output])
+    #output = np.concatenate([output, output])
     return structure, output#_ratio
 
 def get_data_half():
