@@ -376,6 +376,7 @@ def main():
     print(eval_start)
     print(design)
     print(best_eval)
+    print(model.predict(design.reshape(1,-1)))
 
 
 if __name__ == '__main__':
