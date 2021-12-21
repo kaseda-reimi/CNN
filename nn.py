@@ -13,7 +13,7 @@ input_size = y_len*x_len
 epochs = 1000
 batch_size = 128
 
-model_path = os.getcwd()+'/nn_model'
+model_path = os.getcwd()+'/nn_model1'
 
 def main():
     input_data, output_data = fc.get_data()
@@ -21,8 +21,8 @@ def main():
     input_data = input_data.reshape(-1, input_size)
     #正規化
     input_data /= 2
-    output_data[:,0], min0, max0 = fc.normalize(output_data[:,0])
-    output_data[:,1], min1, max1 = fc.normalize(output_data[:,1])
+    #output_data[:,0], min0, max0 = fc.normalize(output_data[:,0])
+    #output_data[:,1], min1, max1 = fc.normalize(output_data[:,1])
 
     x_train, x_test, y_train, y_test = train_test_split(input_data,output_data,test_size=0.1)
 
@@ -69,10 +69,10 @@ def main():
     print(np.corrcoef(y_test[:,0], predict[:,0]))
     print(np.corrcoef(y_test[:,1], predict[:,1]))
     #非正規化
-    y_test[:,0] = y_test[:,0] * (max0 - min0) + min0
-    predict[:,0] = predict[:,0] * (max0 - min0) + min0
-    y_test[:,1] = y_test[:,1] * (max1 - min1) + min1
-    predict[:,1] = predict[:,1] * (max1 - min1) + min1
+    #y_test[:,0] = y_test[:,0] * (max0 - min0) + min0
+    #predict[:,0] = predict[:,0] * (max0 - min0) + min0
+    #y_test[:,1] = y_test[:,1] * (max1 - min1) + min1
+    #predict[:,1] = predict[:,1] * (max1 - min1) + min1
 
     simulation = np.zeros(y_test.shape)
     simulation[:,0] = 2 * np.log10(1/y_test[:,0])
