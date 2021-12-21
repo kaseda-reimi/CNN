@@ -74,14 +74,14 @@ def normalize(x):
 
 def evaluation(y):
     #非正規化
-    y[0,0] = y[0,0]*(0.65-0.06) + 0.06
-    y[0,1] = y[0,1]*(0.65-0.01) + 0.01
+    #y[0,0] = y[0,0]*(0.65-0.06) + 0.06
+    #y[0,1] = y[0,1]*(0.65-0.01) + 0.01
     if y[0,0] < 0:
         y[0,0] = 0.01
     if y[0,1] < 0:
         y[0,1] = 0.01
     #消光比計算
-    extinction = 20 * np.log10(y[0,0]/y[0,1])
+    extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
     E = extinction - 2*loss
     return E, extinction, loss
@@ -191,9 +191,11 @@ def design():
 
 if __name__ == '__main__':
     input, output1= get_data()
-    print(np.amin(output1))
-    print(np.amax(output1))
-    print(output1.shape[0])
+    #print(np.amin(output1))
+    #print(np.amax(output1))
+    #print(np.argmax(output1))
+    print(input[42])
+    print(output1[42])
     x = list(range(0, 25, 1))
     y = np.zeros([2,25])
     for i in range(output1.shape[0]):
