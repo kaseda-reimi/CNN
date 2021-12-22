@@ -74,6 +74,16 @@ def main():
     #y_test[:,1] = y_test[:,1] * (max1 - min1) + min1
     #predict[:,1] = predict[:,1] * (max1 - min1) + min1
 
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    #ax.set_xlim(0, 1)
+    #ax.set_ylim(0, 1)
+    ax.scatter(y_test[:,0],predict[:,0], c='red')
+    ax.scatter(y_test[:,1],predict[:,1], c='blue')
+    ax.set_xlabel('simulation')
+    ax.set_ylabel('NN')
+    plt.savefig("scatter_.png")
+
     simulation = np.zeros(y_test.shape)
     simulation[:,0] = 2 * np.log10(1/y_test[:,0])
     simulation[:,1] = 2 * np.log10(1/y_test[:,1])
