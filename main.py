@@ -38,7 +38,7 @@ def create_first_design(mode):
 def create_neighbor(design):
     neighbor = copy.copy(design)
     #1で囲む
-    #neighbor = np.insert(neighbor, y_len, 1, axis=0)
+    neighbor = np.insert(neighbor, y_len, 1, axis=0)
     neighbor = np.insert(neighbor, 0, 1, axis=0)
     neighbor = np.insert(neighbor, x_len, 1, axis=1)
     neighbor = np.insert(neighbor, 0, 1, axis=1)
@@ -59,14 +59,12 @@ def create_neighbor(design):
                 pattern = 1
         if pattern == 1:
             #境界部抽出
-            groove = np.array(list(zip(*np.where(neighbor[1:y_len,1:x_len+1]==1))))+1
+            groove = np.array(list(zip(*np.where(neighbor[1:y_len+1,1:x_len+1]==1))))+1
             #変更箇所選定
             n = random.randrange(0,len(groove))
             cp_x = groove[n][1]
             cp_y = groove[n][0]
-        
-
-        
+        #変更箇所(3×3)
         change_area = neighbor[cp_y-1:cp_y+2, cp_x-1:cp_x+2]
 
         #変更
@@ -79,11 +77,13 @@ def create_neighbor(design):
         #print("subpattern", subpattern)
         #分岐
         if pattern < 3:
-            change_area[1][1] = 2
+            if subpattern == 0:
+                change_area[1][1] = change_area[0][1]
+            else:
+                change_area[1][1] = change_area[0][0]
         elif pattern == 3:
             if subpattern == 0:#BF
-                #F
-                if np.all(_change_area == _change_area.T):
+                if np.all(_change_area == _change_area.T):#F
                     dise = random.randint(0,1)
                     if _change_area[0][0] == 1:
                         if dise == 0:
@@ -103,8 +103,7 @@ def create_neighbor(design):
                             change_area[0][1] = 1
                             change_area[1][0] = 1
                             change_area[1][1] = change_area[1][2]
-                else:
-                    #B
+                else:#B
                     if _change_area[0][0] == 1:
                         change_area[1][1] = change_area[2][2]
                         if _change_area[0][2] == 1:
