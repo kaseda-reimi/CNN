@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import random
 #import matplotlib.pyplot as plt
 
 x_len = 40
@@ -83,7 +84,7 @@ def evaluation(y):
     #消光比計算
     extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
-    E = extinction - 2*loss
+    E = extinction# - loss
     return E, extinction, loss
 
 def write_data(path, data):
@@ -186,21 +187,45 @@ def design():
             num += 1
     return design[1:y_len+1, 1:x_len+1]
 
-
+def create_neighbor(design):
+    for change_level in range(3):
+        #境界部抽出
+        groove = np.array(list(zip(*np.where(design[:,:]==1))))+1
+        #変更箇所選定
+        n = random.randrange(0,len(groove))
+        x = groove[n][1]
+        y = groove[n][0]
+        dise = random.randint(0,1)
+        if dise == 0:
+            design[y][x] = 0
+            if y < y_len-1 and design[y+1][x] == 2:
+                design[y+1][x] = 1
+            if y > 0 and design[y-1][x] == 2:
+                design[y-1][x] = 1
+            if x < x_len-1 and design[y][x+1] == 2:
+                design[y][x+1] = 1
+            if x > 0 and design[y][x-1] == 2:
+                design[y][x-1] = 1
+        if dise == 1:
+            if y < y_len-1:
+                design[y][x] = 2
+                if design[y+1][x] == 0:
+                    design[y+1][x] = 1
+                if y > 0 and design[y-1][x] == 0:
+                    design[y-1][x] = 1
+                if x > 0 and design[y][x-1] == 0:
+                    design[y][x-1] = 1
+                if x < x_len-1 and design[y][x+1] == 0:
+                    design[y][x+1] = 1
+        groove = np.array(list(zip(*np.where(design[:,:]==1))))+1
+        for n in groove:
+            if design[n[0]-1][n[1]]!=2 and design[n[0]+1][n[1]]!=2 and design[n[0]][n[1]-1]!=2 and design[n[0]][n[1]+1]!=2:
+                design[n[0]][n[1]] = 0
+    return design
 
 
 if __name__ == '__main__':
-    input, output1= get_data()
-    #print(np.amin(output1))
-    #print(np.amax(output1))
-    #print(np.argmax(output1))
-    print(input[42])
-    print(output1[42])
-    x = list(range(0, 25, 1))
-    y = np.zeros([2,25])
-    for i in range(output1.shape[0]):
-        a = output1[i][0]//0.1
-        y[0][int(a)] += 1
-        b = output1[i][1]//0.1
-        y[1][int(b)] += 1
-    print(y)
+    design = design()
+    print(design)
+    create_neighbor(design)
+    print(design)
