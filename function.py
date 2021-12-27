@@ -190,11 +190,12 @@ def design():
 def create_neighbor(design):
     for change_level in range(3):
         #境界部抽出
-        groove = np.array(list(zip(*np.where(design[:,:]==1))))+1
+        groove = np.array(list(zip(*np.where(design[:,:]==1))))
         #変更箇所選定
         n = random.randrange(0,len(groove))
         x = groove[n][1]
         y = groove[n][0]
+        print(n,y,x)
         dise = random.randint(0,1)
         if dise == 0:
             design[y][x] = 0
@@ -217,10 +218,10 @@ def create_neighbor(design):
                     design[y][x-1] = 1
                 if x < x_len-1 and design[y][x+1] == 0:
                     design[y][x+1] = 1
-        groove = np.array(list(zip(*np.where(design[:,:]==1))))+1
-        for n in groove:
-            if design[n[0]-1][n[1]]!=2 and design[n[0]+1][n[1]]!=2 and design[n[0]][n[1]-1]!=2 and design[n[0]][n[1]+1]!=2:
-                design[n[0]][n[1]] = 0
+        groove = np.array(list(zip(*np.where(design[:,:]==1))))
+        for g in groove:
+            if design[g[0]-1][g[1]]!=2 and design[g[0]+1][g[1]]!=2 and design[g[0]][g[1]-1]!=2 and design[g[0]][g[1]+1]!=2:
+                design[g[0]][g[1]] = 0
     return design
 
 
