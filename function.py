@@ -205,6 +205,8 @@ def create_neighbor(design):
         y = groove[n][0]
         #print(n,y,x)
         dise = random.randint(0,1)
+        if y == y_len-1:
+            dise = 0
         if dise == 0:
             neighbor[y][x] = 0
             if y < y_len-1 and neighbor[y+1][x] == 2:
@@ -216,18 +218,15 @@ def create_neighbor(design):
             if x > 0 and neighbor[y][x-1] == 2:
                 neighbor[y][x-1] = 1
         if dise == 1:
-            if y < y_len-1:
-                neighbor[y][x] = 2
-                if neighbor[y+1][x] == 0:
-                    neighbor[y+1][x] = 1
-                if y > 0 and neighbor[y-1][x] == 0:
-                    neighbor[y-1][x] = 1
-                if x > 0 and neighbor[y][x-1] == 0:
-                    neighbor[y][x-1] = 1
-                if x < x_len-1 and neighbor[y][x+1] == 0:
-                    neighbor[y][x+1] = 1
-            else:
-                change_level -= 1
+            neighbor[y][x] = 2
+            if neighbor[y+1][x] == 0:
+                neighbor[y+1][x] = 1
+            if y > 0 and neighbor[y-1][x] == 0:
+                neighbor[y-1][x] = 1
+            if x > 0 and neighbor[y][x-1] == 0:
+                neighbor[y][x-1] = 1
+            if x < x_len-1 and neighbor[y][x+1] == 0:
+                neighbor[y][x+1] = 1
         groove = np.array(list(zip(*np.where(neighbor[:,:]==1))))
         for g in groove:
             neighbor[g[0]][g[1]] = 0
