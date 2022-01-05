@@ -172,7 +172,7 @@ def design():
                             break
                 count = 5
     #１で囲む
-    print(EA)
+    #print(EA)
     design = np.insert(design, y_len, 1, axis=0)
     design = np.insert(design, 0, 1, axis=0)
     design = np.insert(design, x_len, 1, axis=1)
@@ -195,7 +195,7 @@ def create_neighbor(design):
         n = random.randrange(0,len(groove))
         x = groove[n][1]
         y = groove[n][0]
-        print(n,y,x)
+        #print(n,y,x)
         dise = random.randint(0,1)
         if dise == 0:
             design[y][x] = 0
@@ -226,6 +226,8 @@ def create_neighbor(design):
 
 
 if __name__ == '__main__':
+    input, output = get_data()
+    print(input.shape[0])
     design = design()
     print(design)
     create_neighbor(design)
