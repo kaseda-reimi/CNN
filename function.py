@@ -227,11 +227,11 @@ def create_neighbor(design):
             neighbor[g[0]][g[1]] = 0
             if g[0]>0 and neighbor[g[0]-1][g[1]]==2:
                 neighbor[g[0]][g[1]] = 1
-            elif g[0]<5 and neighbor[g[0]+1][g[1]]==2:
+            elif g[0]<y_len-1 and neighbor[g[0]+1][g[1]]==2:
                 neighbor[g[0]][g[1]] = 1
             elif g[1]>0 and neighbor[g[0]][g[1]-1]==2:
                 neighbor[g[0]][g[1]] = 1
-            elif g[1]<5 and neighbor[g[0]][g[1]+1]==2:
+            elif g[1]<x_len-1 and neighbor[g[0]][g[1]+1]==2:
                 neighbor[g[0]][g[1]] = 1
             
     return neighbor
