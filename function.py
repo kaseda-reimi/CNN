@@ -220,8 +220,16 @@ def create_neighbor(design):
                     design[y][x+1] = 1
         groove = np.array(list(zip(*np.where(design[:,:]==1))))
         for g in groove:
-            if design[g[0]-1][g[1]]!=2 and design[g[0]+1][g[1]]!=2 and design[g[0]][g[1]-1]!=2 and design[g[0]][g[1]+1]!=2:
-                design[g[0]][g[1]] = 0
+            design[g[0]][g[1]] = 0
+            if g[0]>0 and design[g[0]-1][g[1]]!=2:
+                design[g[0]][g[1]] = 1
+            elif g[0]<5 and design[g[0]+1][g[1]]!=2:
+                design[g[0]][g[1]] = 1
+            elif g[1]>0 and design[g[0]][g[1]-1]!=2:
+                design[g[0]][g[1]] = 1
+            elif g[1]<5 and design[g[0]][g[1]+1]!=2:
+                design[g[0]][g[1]] = 1
+            
     return design
 
 
