@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import random
+import copy
 #import matplotlib.pyplot as plt
 
 x_len = 40
@@ -188,9 +189,10 @@ def design():
     return design[1:y_len+1, 1:x_len+1]
 
 def create_neighbor(design):
+    neighbor = copy.copy(design)
     for change_level in range(3):
         #境界部抽出
-        groove = np.array(list(zip(*np.where(design[:,:]==1))))
+        groove = np.array(list(zip(*np.where(neighbor[:,:]==1))))
         #変更箇所選定
         n = random.randrange(0,len(groove))
         x = groove[n][1]
@@ -198,45 +200,45 @@ def create_neighbor(design):
         #print(n,y,x)
         dise = random.randint(0,1)
         if dise == 0:
-            design[y][x] = 0
-            if y < y_len-1 and design[y+1][x] == 2:
-                design[y+1][x] = 1
-            if y > 0 and design[y-1][x] == 2:
-                design[y-1][x] = 1
-            if x < x_len-1 and design[y][x+1] == 2:
-                design[y][x+1] = 1
-            if x > 0 and design[y][x-1] == 2:
-                design[y][x-1] = 1
+            neighbor[y][x] = 0
+            if y < y_len-1 and neighbor[y+1][x] == 2:
+                neighbor[y+1][x] = 1
+            if y > 0 and neighbor[y-1][x] == 2:
+                neighbor[y-1][x] = 1
+            if x < x_len-1 and neighbor[y][x+1] == 2:
+                neighbor[y][x+1] = 1
+            if x > 0 and neighbor[y][x-1] == 2:
+                neighbor[y][x-1] = 1
         if dise == 1:
             if y < y_len-1:
-                design[y][x] = 2
-                if design[y+1][x] == 0:
-                    design[y+1][x] = 1
-                if y > 0 and design[y-1][x] == 0:
-                    design[y-1][x] = 1
-                if x > 0 and design[y][x-1] == 0:
-                    design[y][x-1] = 1
-                if x < x_len-1 and design[y][x+1] == 0:
-                    design[y][x+1] = 1
-        groove = np.array(list(zip(*np.where(design[:,:]==1))))
+                neighbor[y][x] = 2
+                if neighbor[y+1][x] == 0:
+                    neighbor[y+1][x] = 1
+                if y > 0 and neighbor[y-1][x] == 0:
+                    neighbor[y-1][x] = 1
+                if x > 0 and neighbor[y][x-1] == 0:
+                    neighbor[y][x-1] = 1
+                if x < x_len-1 and neighbor[y][x+1] == 0:
+                    neighbor[y][x+1] = 1
+        groove = np.array(list(zip(*np.where(neighbor[:,:]==1))))
         for g in groove:
-            design[g[0]][g[1]] = 0
-            if g[0]>0 and design[g[0]-1][g[1]]!=2:
-                design[g[0]][g[1]] = 1
-            elif g[0]<5 and design[g[0]+1][g[1]]!=2:
-                design[g[0]][g[1]] = 1
-            elif g[1]>0 and design[g[0]][g[1]-1]!=2:
-                design[g[0]][g[1]] = 1
-            elif g[1]<5 and design[g[0]][g[1]+1]!=2:
-                design[g[0]][g[1]] = 1
+            neighbor[g[0]][g[1]] = 0
+            if g[0]>0 and neighbor[g[0]-1][g[1]]!=2:
+                neighbor[g[0]][g[1]] = 1
+            elif g[0]<5 and neighbor[g[0]+1][g[1]]!=2:
+                neighbor[g[0]][g[1]] = 1
+            elif g[1]>0 and neighbor[g[0]][g[1]-1]!=2:
+                neighbor[g[0]][g[1]] = 1
+            elif g[1]<5 and neighbor[g[0]][g[1]+1]!=2:
+                neighbor[g[0]][g[1]] = 1
             
-    return design
+    return neighbor
 
 
 if __name__ == '__main__':
     input, output = get_data()
     print(input.shape[0])
     design = design()
+    neighbor = create_neighbor(design)
     print(design)
-    create_neighbor(design)
-    print(design)
+    print(neighbor)
