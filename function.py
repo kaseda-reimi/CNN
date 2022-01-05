@@ -220,6 +220,8 @@ def create_neighbor(design):
                     neighbor[y][x-1] = 1
                 if x < x_len-1 and neighbor[y][x+1] == 0:
                     neighbor[y][x+1] = 1
+            else:
+                change_level -= 1
         groove = np.array(list(zip(*np.where(neighbor[:,:]==1))))
         for g in groove:
             neighbor[g[0]][g[1]] = 0
