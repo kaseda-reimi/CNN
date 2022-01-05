@@ -188,6 +188,12 @@ def design():
             num += 1
     return design[1:y_len+1, 1:x_len+1]
 
+def get_design():
+    input, output = get_data()
+    n = np.argmin(output[:,1])
+    design = input[n]
+    return design
+
 def create_neighbor(design):
     neighbor = copy.copy(design)
     for change_level in range(3):
@@ -238,9 +244,5 @@ def create_neighbor(design):
 
 
 if __name__ == '__main__':
-    input, output = get_data()
-    print(input.shape[0])
-    design = design()
-    neighbor = create_neighbor(design)
+    design = get_design()
     print(design)
-    print(neighbor)
