@@ -349,7 +349,7 @@ def create_neighbor(design):
 
 def main():
     #初期個体生成
-    design = fc.design()
+    design = fc.get_design()
     #評価
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
