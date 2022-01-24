@@ -74,6 +74,8 @@ def main():
     #y_test[:,1] = y_test[:,1] * (max1 - min1) + min1
     #predict[:,1] = predict[:,1] * (max1 - min1) + min1
 
+    model.summary()
+
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
     #ax.set_xlim(0, 1)
