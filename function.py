@@ -211,7 +211,7 @@ def create_neighbor(design):
         y = groove[n][0]
         #print(n,y,x)
         dise = random.randint(0,1)
-        if y == y_len-1:
+        if y > y_len/2:
             dise = 0
         if dise == 0:
             neighbor[y][x] = 0
