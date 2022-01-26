@@ -75,17 +75,23 @@ def normalize(x):
     return normalized_x, np.amin(x), np.amax(x)
 
 def evaluation(y):
-    #非正規化
-    #y[0,0] = y[0,0]*(0.65-0.06) + 0.06
-    #y[0,1] = y[0,1]*(0.65-0.01) + 0.01
     if y[0,0] < 0:
-        y[0,0] = 0.01
+        y[0,0] = 0.001
     if y[0,1] < 0:
-        y[0,1] = 0.01
-    #消光比計算
+        y[0,1] = 0.001
     extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
     E = extinction# - loss
+    return E, extinction, loss
+
+def evaluation_2nd(y):
+    if y[0,0] < 0:
+        y[0,0] = 0.001
+    if y[0,1] < 0:
+        y[0,1] = 0.001
+    extinction = 20 * np.log10(1/y[0,1])
+    loss = 20 * np.log10(1/y[0,0])
+    E = extinction - loss
     return E, extinction, loss
 
 def write_data(path, data):
