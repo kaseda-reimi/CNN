@@ -369,11 +369,11 @@ def main():
         design = best_design
         eval = best_eval
         print(i, best_eval)
-        if best_eval[0] > 40:
-            break
+        #if best_eval[0] > 40:
+        #    break
     perform = model.predict(design.reshape(1,-1))
     eval = fc.evaluation_2nd(perform)
-    for j in range(i,epochs):
+    for j in range(i+1,epochs):
         best_design = design
         best_eval = eval
         for n in range(group):
