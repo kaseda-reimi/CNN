@@ -356,14 +356,19 @@ def main():
     eval = fc.evaluation(perform)
     start = copy.copy(design)
     eval_start = copy.copy(eval)
-
+    swich = 0
     for i in range(epochs):
         best_design = design
         best_eval = eval
+        if best_eval > 40:
+            swicth = 1
         for n in range(group):
             neighbor = fc.create_neighbor(design)
             nei_perform = model.predict(neighbor.reshape(1,-1))
-            nei_eval = fc.evaluation(nei_perform)
+            if swicth == 0:
+                nei_eval = fc.evaluation(nei_perform)
+            if swich == 1:
+                nei_eval = fc.evaluation_2nd(nei_perform)
             if nei_eval[0] > best_eval[0]:
                 best_eval = nei_eval
                 best_design = neighbor
