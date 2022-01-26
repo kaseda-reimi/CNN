@@ -91,7 +91,7 @@ def evaluation_2nd(y):
         y[0,1] = 0.001
     extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
-    E = extinction - loss
+    E = extinction - 2*loss
     return E, extinction, loss
 
 def write_data(path, data):
