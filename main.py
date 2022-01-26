@@ -361,7 +361,7 @@ def main():
         best_design = design
         best_eval = eval
         if best_eval[0] > 40:
-            switch = 1
+            switch = 0
         for n in range(group):
             neighbor = fc.create_neighbor(design)
             nei_perform = model.predict(neighbor.reshape(1,-1))
