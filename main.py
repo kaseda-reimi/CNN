@@ -10,7 +10,7 @@ from function import x_len, y_len
 
 
 epochs = 50
-group = 10
+group = 20
 change_level = 3
 
 
