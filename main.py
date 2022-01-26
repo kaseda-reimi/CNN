@@ -356,27 +356,36 @@ def main():
     eval = fc.evaluation(perform)
     start = copy.copy(design)
     eval_start = copy.copy(eval)
-    switch = 0
     for i in range(epochs):
         best_design = design
         best_eval = eval
-        if best_eval[0] > 40:
-            switch = 1
         for n in range(group):
             neighbor = fc.create_neighbor(design)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation(nei_perform)
-            if switch == 0:
-                if nei_eval[0] > best_eval[0]:
-                    best_eval = nei_eval
-                    best_design = neighbor
-            if switch == 1:
-                if nei_eval[0]-nei_eval[2] > best_eval[0]-best_eval[2]:
-                    best_eval = nei_eval
-                    best_design = neighbor
+            if nei_eval[0] > best_eval[0]:
+                best_eval = nei_eval
+                best_design = neighbor
         design = best_design
         eval = best_eval
         print(i, best_eval)
+        if best_eval[0] > 40:
+            break
+    perform = model.predict(design.reshape(1,-1))
+    eval = fc.evaluation_2nd(perform)
+    for j in range(i,epochs):
+        best_design = design
+        best_eval = eval
+        for n in range(group):
+            neighbor = fc.create_neighbor(design)
+            nei_perform = model.predict(neighbor.reshape(1,-1))
+            nei_eval = fc.evaluation_2nd(nei_perform)
+            if nei_eval[0] > best_eval[0]:
+                best_eval = nei_eval
+                best_design = neighbor
+        design = best_design
+        eval = best_eval
+        print(j, best_eval)
     
     print(start)
     print(eval_start)
