@@ -360,7 +360,7 @@ def main():
     for i in range(epochs):
         best_design = design
         best_eval = eval
-        if best_eval > 40:
+        if best_eval[0] > 40:
             swicth = 1
         for n in range(group):
             neighbor = fc.create_neighbor(design)
