@@ -257,7 +257,17 @@ def create_neighbor(design):
             
     return neighbor
 
+def distribution(data):
+    data = 20*np.log10(1/data)
+    print(np.amax(data))
+    distribution = np.zeros([2,40])
+    for i in range(data.shape[0]):
+        n = int(data[i][0] // 1)
+        m = int(data[i][1] // 1)
+        distribution[0][n+8] += 1
+        distribution[1][m+8] += 1
+    return distribution
 
 if __name__ == '__main__':
-    design = get_design()
-    print(design)
+    input, output = get_data()
+    print(distribution(output))
