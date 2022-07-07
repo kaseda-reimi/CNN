@@ -81,7 +81,9 @@ def evaluation(y):
         y[0,1] = 0.001
     extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
-    E = extinction# - loss
+    a = 1
+    b = 1
+    E = a * extinction - b * loss
     return E, extinction, loss
 
 def evaluation_2nd(y):
@@ -91,7 +93,12 @@ def evaluation_2nd(y):
         y[0,1] = 0.001
     extinction = 20 * np.log10(1/y[0,1])
     loss = 20 * np.log10(1/y[0,0])
-    E = extinction - 2*loss
+    a = 1
+    b = 1
+    _ex = extinction
+    if (extinction > 20):
+        _ex = 20
+    E = a * _ex - b * loss
     return E, extinction, loss
 
 def write_data(path, data):
@@ -270,4 +277,7 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    print(distribution(output))
+    max = np.argmax(output[:,0])
+    print(max)
+    print(output[max])
+    print(input[max])
