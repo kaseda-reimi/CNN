@@ -10,7 +10,7 @@ from function import y_len, x_len
 import numpy as np
 
 input_size = y_len*x_len
-epochs = 500
+epochs = 1000
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model1'
@@ -54,6 +54,7 @@ def main():
     plt.plot(range(nb_epoch), loss,     marker='.', label='loss')
     plt.plot(range(nb_epoch), val_loss, marker='.', label='val_loss')
     plt.legend(loc='best', fontsize=10)
+    plt.yscale("log")
     plt.grid()
     plt.xlabel('epoch')
     plt.ylabel('loss')
