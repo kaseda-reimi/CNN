@@ -4,10 +4,10 @@ import random
 import copy
 #import matplotlib.pyplot as plt
 
-x_len = 40
+x_len = 39
 y_len = 6
 
-def get_data():
+def get_data_old():
     path = os.getcwd()+'/data_r2.txt'
     with open (path) as f:
         l = f.read().split()
@@ -16,9 +16,9 @@ def get_data():
         l.extend(f.read().split())
     
     data = [float(s) for s in l]
-    data = np.array(data).reshape(-1, x_len*y_len+2)
-    structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
-    output = data[:,x_len*y_len:].reshape(-1, 2)
+    data = np.array(data).reshape(-1, 40*y_len+2)
+    structure = data[:,:40*y_len].reshape(-1, y_len, 40)
+    output = data[:,40*y_len:].reshape(-1, 2)
     half_str, half_out = get_data_half()
     structure = np.concatenate([structure, half_str])
     output = np.concatenate([output, half_out])
@@ -26,10 +26,7 @@ def get_data():
     #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
     output[:,1] = output[:,1]/output[:,0]
-    #上下反転してデータを増やす
-    #structure = np.concatenate([structure, np.flip(structure,1)])
-    #output_ratio = np.concatenate([output_ratio, output_ratio])
-    #output = np.concatenate([output, output])
+    
     return structure, output#_ratio
 
 def get_data_half():
@@ -41,14 +38,14 @@ def get_data_half():
     data = np.array(data).reshape(-1, half_x*y_len+2)
     structure = data[:,:half_x*y_len].reshape(-1, y_len, half_x)
     output = data[:,half_x*y_len:].reshape(-1, 2)
-    input = np.zeros([structure.shape[0], y_len, x_len])
+    input = np.zeros([structure.shape[0], y_len, 40])
     for n in range(structure.shape[0]):
         for j in range(y_len):
             for i in range(half_x):
                 input[n][j][i*2:i*2+2] = structure[n][j][i]
     for n in range(input.shape[0]):
         for j in range(y_len):
-            for i in range(x_len):
+            for i in range(40):
                 if input[n,j,i] == 1:
                     up = j-1
                     down = j+2
@@ -60,8 +57,8 @@ def get_data_half():
                         down = y_len
                     if left < 0:
                         left = 0
-                    if right > x_len:
-                        right = x_len
+                    if right > 40:
+                        right = 40
                     if np.prod(input[n,up:down,left:right]-2) != 0:
                         input[n][j][i] = 0
                     
@@ -70,36 +67,36 @@ def get_data_half():
     output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
     return input, output#, output_ratio
 
+def get_data():
+    path = os.getcwd()+'/data_78.txt'
+    with open (path) as f:
+        l = f.read().split()
+    data = [float(s) for s in l]
+    data = np.array(data).reshape(-1, x_len*y_len+2)
+    structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
+    output = data[:,x_len*y_len:].reshape(-1, 2)
+    output[:,1] = output[:,1]/output[:,0]
+
+    return structure, output
+
 def normalize(x):
     normalized_x= (x - np.amin(x)) / (np.amax(x) - np.amin(x))
     return normalized_x, np.amin(x), np.amax(x)
 
 def evaluation(y):
-    if y[0,0] < 0:
-        y[0,0] = 0.001
-    if y[0,1] < 0:
-        y[0,1] = 0.001
-    extinction = 20 * np.log10(1/y[0,1])
-    loss = 20 * np.log10(1/y[0,0])
+    if y[0] < 0:
+        y[0] = 0.001
+    if y[1] < 0:
+        y[1] = 0.001
+    extinction = 20 * np.log10(1/y[1])
+    loss = 20 * np.log10(1/y[0])
     a = 1
-    b = 1
-    E = a * extinction - b * loss
-    return E, extinction, loss
-
-def evaluation_2nd(y):
-    if y[0,0] < 0:
-        y[0,0] = 0.001
-    if y[0,1] < 0:
-        y[0,1] = 0.001
-    extinction = 20 * np.log10(1/y[0,1])
-    loss = 20 * np.log10(1/y[0,0])
-    a = 1
-    b = 1
+    b = 2
     _ex = extinction
     if (extinction > 20):
         _ex = 20
     E = a * _ex - b * loss
-    return E, extinction, loss
+    return E#, extinction, loss
 
 def write_data(path, data):
     with open(os.getcwd()+path, mode='w') as f:
@@ -217,9 +214,9 @@ def get_design_z():
     design[5] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     return design
 
-def create_neighbor(design):
+def create_neighbor(design,change_level):
     neighbor = copy.copy(design)
-    for change_level in range(3):
+    for _ in range(change_level):
         #境界部抽出
         groove = np.array(list(zip(*np.where(neighbor[:,:]==1))))
         #変更箇所選定
@@ -277,7 +274,6 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    max = np.argmax(output[:,0])
+    max, argmax = search_E_max(output)
     print(max)
-    print(output[max])
-    print(input[max])
+    print(output[argmax])
