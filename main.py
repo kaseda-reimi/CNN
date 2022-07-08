@@ -40,7 +40,7 @@ def main():
         best_design = design
         best_eval = eval
         for _ in range(group):
-            neighbor = fc.create_neighbor(design)
+            neighbor = fc.create_neighbor(design, change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation(nei_perform)
             if nei_eval[0] > best_eval[0]:
@@ -57,7 +57,7 @@ def main():
         best_design = design
         best_eval = eval
         for _ in range(group):
-            neighbor = fc.create_neighbor(design)
+            neighbor = fc.create_neighbor(design,change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation(nei_perform)
             if nei_eval[0] > best_eval[0]:
