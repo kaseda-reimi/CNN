@@ -33,7 +33,7 @@ def main():
     #評価
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
-    eval = fc.evaluation(perform)
+    eval = fc.evaluation(perform[0])
     start = copy.copy(design)
     eval_start = copy.copy(eval)
     for i in range(epochs):
