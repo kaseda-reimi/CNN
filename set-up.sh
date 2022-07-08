@@ -1,5 +1,6 @@
 #sudo apt-get update
-#sudo apt-get install -yq git python3.7 python3-venv
+#sudo apt-get install -yq git
+#sudo apt-get install python3-venv
 #git clone 
 
 git config --global user.name "kaseda-reimi"
