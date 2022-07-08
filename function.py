@@ -98,6 +98,23 @@ def evaluation(y):
     E = a * _ex - b * loss
     return E, extinction, loss
 
+def evaluation_2(x,y):
+    if y[0] < 0:
+        y[0] = 0.001
+    if y[1] < 0:
+        y[1] = 0.001
+    extinction = 20 * np.log10(1/y[1])
+    loss = 20 * np.log10(1/y[0])
+    _ex = extinction
+    if (extinction > 20):
+        _ex = 20
+    groove = np.count_nonzero(x==1)
+    a = 1
+    b = 2
+    c = 0.1
+    E = a * _ex - b * loss - c * groove
+    return E, extinction, loss, groove
+
 def write_data(path, data):
     with open(os.getcwd()+path, mode='w') as f:
         for i in range(data.shape[0]):
@@ -108,13 +125,13 @@ def write_data(path, data):
             f.write('\n')
     print("了")
 
-def search_E_max(data):
+def search_E_max(input, output):
     E_max = -10
     max_index = 0
-    for i in range(data.shape[0]):
-        E = evaluation(data[i])
-        if E > E_max:
-            E_max = E
+    for i in range(input.shape[0]):
+        E = evaluation_2(input[i],output[i])
+        if E[0] > E_max:
+            E_max = E[0]
             max_index = i
     return E_max, max_index
 
@@ -274,6 +291,7 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    max, argmax = search_E_max(output)
-    print(max)
+    max, argmax = search_E_max(input, output)
+    print(max, argmax)
     print(output[argmax])
+    print(input[argmax])
