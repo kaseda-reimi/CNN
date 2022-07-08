@@ -29,7 +29,7 @@ def create_first_design(mode):
 
 def main():
     #初期個体生成
-    design = create_first_design(0)
+    design = fc.get_design()
     #評価
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
