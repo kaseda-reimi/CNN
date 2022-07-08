@@ -96,7 +96,7 @@ def evaluation(y):
     if (extinction > 20):
         _ex = 20
     E = a * _ex - b * loss
-    return E#, extinction, loss
+    return E, extinction, loss
 
 def write_data(path, data):
     with open(os.getcwd()+path, mode='w') as f:
