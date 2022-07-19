@@ -68,7 +68,7 @@ def get_data_half():
     return input, output#, output_ratio
 
 def get_data():
-    path = os.getcwd()+'/data78x.txt'
+    path = os.getcwd()+'/data_78x.txt'
     with open (path) as f:
         l = f.read().split()
     data = [float(s) for s in l]
