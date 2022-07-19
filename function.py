@@ -8,12 +8,12 @@ x_len = 39
 y_len = 6
 
 def get_data_old():
-    path = os.getcwd()+'/data_r2.txt'
-    with open (path) as f:
-        l = f.read().split()
     path = os.getcwd()+'/data.txt'
     with open (path) as f:
-        l.extend(f.read().split())
+        l = f.read().split()
+    #path = os.getcwd()+'/data_r2.txt'
+    #with open (path) as f:
+    #    l.extend(f.read().split())
     
     data = [float(s) for s in l]
     data = np.array(data).reshape(-1, 40*y_len+2)
@@ -25,7 +25,7 @@ def get_data_old():
     #output_ratio = np.zeros([output.shape[0],2])
     #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
-    output[:,1] = output[:,1]/output[:,0]
+    #output[:,1] = output[:,1]/output[:,0]
     
     return structure, output#_ratio
 
@@ -68,7 +68,7 @@ def get_data_half():
     return input, output#, output_ratio
 
 def get_data():
-    path = os.getcwd()+'/data_78.txt'
+    path = os.getcwd()+'/data78x.txt'
     with open (path) as f:
         l = f.read().split()
     data = [float(s) for s in l]
@@ -115,13 +115,14 @@ def evaluation_2(x,y):
     E = a * _ex - b * loss - c * groove
     return E, extinction, loss, groove
 
-def write_data(path, data):
-    with open(os.getcwd()+path, mode='w') as f:
+def write_data(path, data, output):
+    with open(os.getcwd()+"/"+path+".txt", mode='w') as f:
         for i in range(data.shape[0]):
             for j in range(data.shape[1]):
                 for n in data[i][j]:
-                    f.write(str(n)+" ")
+                    f.write(str(int(n))+" ")
                 f.write('\n')
+            #f.write(str(output[i][0])+"\n"+str(output[i][1]))
             f.write('\n')
     print("了")
 
@@ -291,8 +292,6 @@ def distribution(data):
     return distribution
 
 if __name__ == '__main__':
-    input, output = get_data()
-    max, argmax = search_E_max(input, output)
-    print(max, argmax)
-    print(output[argmax])
-    print(input[argmax])
+    input, output = get_data_old()
+    write_data("design_d+h",input,output)
+    
