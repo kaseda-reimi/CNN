@@ -13,7 +13,7 @@ input_size = y_len*x_len
 epochs = 10000
 batch_size = 128
 
-model_path = os.getcwd()+'/nn_model'
+model_path = os.getcwd()+'/nn_model1'
 
 def main():
     input_data, output_data = fc.get_data()
