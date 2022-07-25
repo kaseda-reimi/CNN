@@ -34,38 +34,21 @@ def main():
     model = load_model(model_path)
     perform = model.predict(design.reshape(1, -1))
     eval = fc.evaluation_2(design, perform[0])
-    start = copy.copy(design)
-    eval_start = copy.copy(eval)
+    start = copy.deepcopy(design)
+    eval_start = copy.deepcopy(eval)
     for i in range(epochs):
-        best_design = design
-        best_eval = eval
+        best_design = copy.deepcopy(design)
+        best_eval = copy.deepcopy(eval)
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation_2(design, nei_perform[0])
             if nei_eval[0] > best_eval[0]:
-                best_eval = nei_eval
-                best_design = neighbor
+                best_eval = copy.deepcopy(nei_eval)
+                best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
         print(i, best_eval)
-        #if best_eval[0] > 40:
-        #    break
-    perform = model.predict(design.reshape(1,-1))
-    eval = fc.evaluation(perform[0])
-    for j in range(i+1,epochs):
-        best_design = design
-        best_eval = eval
-        for _ in range(group):
-            neighbor = fc.create_neighbor(design,change_level)
-            nei_perform = model.predict(neighbor.reshape(1,-1))
-            nei_eval = fc.evaluation(nei_perform[0])
-            if nei_eval[0] > best_eval[0]:
-                best_eval = nei_eval
-                best_design = neighbor
-        design = best_design
-        eval = best_eval
-        print(j, best_eval)
     
     print(start)
     print(eval_start)
