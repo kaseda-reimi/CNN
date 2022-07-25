@@ -11,9 +11,9 @@ def get_data_old():
     path = os.getcwd()+'/data.txt'
     with open (path) as f:
         l = f.read().split()
-    #path = os.getcwd()+'/data_r2.txt'
-    #with open (path) as f:
-    #    l.extend(f.read().split())
+    path = os.getcwd()+'/data_r2.txt'
+    with open (path) as f:
+        l.extend(f.read().split())
     
     data = [float(s) for s in l]
     data = np.array(data).reshape(-1, 40*y_len+2)
@@ -25,7 +25,7 @@ def get_data_old():
     #output_ratio = np.zeros([output.shape[0],2])
     #output_ratio[:,0] = 2 * np.log10(output[:,0]/output[:,1]) #消光比/10
     #output_ratio[:,1] = 2 * np.log10(1/output[:,0]) #挿入損失/10
-    #output[:,1] = output[:,1]/output[:,0]
+    output[:,1] = output[:,1]/output[:,0]
     
     return structure, output#_ratio
 
@@ -71,6 +71,9 @@ def get_data():
     path = os.getcwd()+'/data_78x.txt'
     with open (path) as f:
         l = f.read().split()
+    path = os.getcwd()+'/data_78.txt'
+    with open (path) as f:
+        l.extend(f.read().split())
     data = [float(s) for s in l]
     data = np.array(data).reshape(-1, x_len*y_len+2)
     structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
@@ -114,6 +117,13 @@ def evaluation_2(x,y):
     c = 0.1
     E = a * _ex - b * loss - c * groove
     return E, extinction, loss, groove
+
+def count_groove(x):
+    groove = 0
+    ones = np.array(list(zip(*np.where(x[:,:]==1))))
+    for i in range(ones.shape[0]):
+        onex = ones[i][1]
+        oney = ones[i][0]
 
 def write_data(path, data, output):
     with open(os.getcwd()+"/"+path+".txt", mode='w') as f:
@@ -292,6 +302,6 @@ def distribution(data):
     return distribution
 
 if __name__ == '__main__':
-    input, output = get_data_old()
-    write_data("design_d+h",input,output)
+    input, output = get_data()
+    print(input.shape[0])
     
