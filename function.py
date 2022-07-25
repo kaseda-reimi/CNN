@@ -118,12 +118,25 @@ def evaluation_2(x,y):
     E = a * _ex - b * loss - c * groove
     return E, extinction, loss, groove
 
-def count_groove(x):
+def count_groove(design):
     groove = 0
-    ones = np.array(list(zip(*np.where(x[:,:]==1))))
-    for i in range(ones.shape[0]):
-        onex = ones[i][1]
-        oney = ones[i][0]
+    for j in range(y_len):
+        for i in range(x_len):
+            if design[j,i] == 1:
+                if j+1 < y_len:
+                    if design[j+1][i] == 2:
+                        groove += 2
+                if j-1 >= 0:
+                    if design[j-1][i] == 2:
+                        groove += 2
+                if i-1 >= 0:
+                    if design[j][i-1] == 2:
+                        groove += 1
+                if i+1 < x_len:
+                    if design[j][i+1] == 2:
+                        groove +=1
+    return groove
+
 
 def write_data(path, data, output):
     with open(os.getcwd()+"/"+path+".txt", mode='w') as f:
@@ -303,5 +316,5 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    print(input.shape[0])
-    
+    design = input[0]
+    print(count_groove(design))
