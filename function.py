@@ -114,7 +114,7 @@ def evaluation_2(x,y):
     groove = np.count_nonzero(x==1)
     a = 1
     b = 2
-    c = 0.1
+    c = 0.05
     E = a * _ex - b * loss - c * groove
     return E, extinction, loss, groove
 
