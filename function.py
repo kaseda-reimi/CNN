@@ -242,7 +242,7 @@ def design():
 def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
-    n = 231
+    n = 150
     design = input[n]
     return design
 
@@ -316,5 +316,6 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    design = input[0]
-    print(count_groove(design))
+    e, num =search_E_max(input, output)
+    print(num)
+    print(input[num])
