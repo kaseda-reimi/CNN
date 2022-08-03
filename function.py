@@ -108,15 +108,12 @@ def evaluation_2(x,y):
         y[1] = 0.001
     extinction = 20 * np.log10(1/y[1])
     loss = 20 * np.log10(1/y[0])
-    _ex = extinction
-    if (extinction > 20):
-        _ex = 20
     #groove = np.count_nonzero(x==1)
     groove = count_groove(x)
     a = 1
     b = 2
     c = 0.3
-    E = a * _ex - b * loss - c * groove
+    E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
 
 def count_groove(design):
@@ -320,5 +317,5 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    print(input.shape[0])
-    
+    print(input[21])
+    print(20*np.log10(1/output[21]))
