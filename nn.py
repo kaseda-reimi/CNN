@@ -10,7 +10,7 @@ from function import y_len, x_len
 import numpy as np
 
 input_size = y_len*x_len
-epochs = 1500
+epochs = 15000
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
@@ -34,7 +34,7 @@ def main():
     model.add(Dense(input_size/1, activation = "relu"))#80
     model.add(Dense(input_size/1, activation = "relu"))
     model.add(Dense(input_size/3, activation = "relu"))
-    model.add(Dense(2, activation='linear'))
+    model.add(Dense(2, activation='sigmoid'))
     
     model.compile(loss='mean_squared_error', optimizer='sgd', metrics=['mae'])
 
