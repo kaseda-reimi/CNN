@@ -10,7 +10,7 @@ from function import y_len, x_len
 import numpy as np
 
 input_size = y_len*x_len
-epochs = 15000
+epochs = 1500
 batch_size = 128
 
 model_path = os.getcwd()+'/nn_model'
@@ -28,7 +28,7 @@ def main():
 
     model = Sequential()
     model.add(InputLayer(input_shape=(input_size,)))#240
-    model.add(Dense(input_size/1, activation = "linear"))#120
+    model.add(Dense(input_size/1, activation = "relu"))#120
     model.add(Dense(input_size/1, activation = "linear"))#120
     model.add(Dense(input_size/1, activation = "linear"))#120
     model.add(Dense(input_size/1, activation = "linear"))#80
