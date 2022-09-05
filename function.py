@@ -240,7 +240,6 @@ def design():
 def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
-    #n = 150
     n = 21
     design = input[n]
     return design
