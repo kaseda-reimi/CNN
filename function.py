@@ -317,5 +317,9 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    print(input[21])
-    print(20*np.log10(1/output[21]))
+    E, n = search_E_max(input, output)
+    print(E, n)
+    #print(input[21])
+    print(input.shape[0])
+    print(input[518])
+    print(output[518])
