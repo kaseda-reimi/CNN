@@ -11,9 +11,9 @@ import numpy as np
 
 input_size = y_len*x_len
 epochs = 15000
-batch_size = 128
+batch_size = 64
 
-model_path = os.getcwd()+'/nn_model'
+model_path = os.getcwd()+'/nn_model2'
 
 def main():
     input_data, output_data = fc.get_data()
