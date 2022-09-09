@@ -112,7 +112,7 @@ def evaluation_2(x,y):
     groove = count_groove(x)
     a = 1
     b = 0
-    c = 0.1
+    c = 0.2
     E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
 
