@@ -111,8 +111,8 @@ def evaluation_2(x,y):
     #groove = np.count_nonzero(x==1)
     groove = count_groove(x)
     a = 1
-    b = 1
-    c = 0.5
+    b = 0
+    c = 0
     E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
 
@@ -319,6 +319,6 @@ if __name__ == '__main__':
     E, n = search_E_max(input, output)
     print(E, n)
     #print(input[21])
-    print(input.shape[0])
-    print(input[518])
-    print(output[518])
+    #print(input.shape[0])
+    print(input[520])
+    print(20*np.log10(1/output[520]))
