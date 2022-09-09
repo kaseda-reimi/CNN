@@ -8,7 +8,7 @@ import function as fc
 from function import x_len, y_len
 
 
-epochs = 100
+epochs = 50
 group = 50
 change_level = 3
 
