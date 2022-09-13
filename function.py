@@ -241,7 +241,7 @@ def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
     #n = 21,520
-    n = 396
+    n = 394
     design = input[n]
     return design
 
