@@ -240,8 +240,8 @@ def design():
 def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
-    #n = 21
-    n = 520
+    #n = 21,520
+    n = 396
     design = input[n]
     return design
 
@@ -321,5 +321,5 @@ if __name__ == '__main__':
     print(E, n)
     #print(input[21])
     #print(input.shape[0])
-    print(input[394])
-    print(20*np.log10(1/output[394]))
+    print(input[n])
+    print(20*np.log10(1/output[n]))
