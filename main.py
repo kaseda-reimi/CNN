@@ -8,8 +8,8 @@ import function as fc
 from function import x_len, y_len
 
 
-epochs = 50
-group = 50
+epochs = 100
+group = 20
 change_level = 3
 
 #初期個体生成
