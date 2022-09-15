@@ -112,7 +112,7 @@ def evaluation_2(x,y):
     groove = count_groove(x)
     a = 1
     b = 0
-    c = 0.3
+    c = 0.2
     E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
 
@@ -240,8 +240,8 @@ def design():
 def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
-    #n = 21,520
-    n = 394
+    #n = 21,394
+    n = 520
     design = input[n]
     return design
 
