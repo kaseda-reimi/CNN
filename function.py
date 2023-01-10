@@ -4,7 +4,7 @@ import random
 import copy
 #import matplotlib.pyplot as plt
 
-x_len = 39
+x_len = 38
 y_len = 6
 
 def get_data_old():
@@ -68,12 +68,10 @@ def get_data_half():
     return input, output#, output_ratio
 
 def get_data():
-    path = os.getcwd()+'/data_78x.txt'
+    path = os.getcwd()+'/data76x.txt'
     with open (path) as f:
         l = f.read().split()
-    path = os.getcwd()+'/data_78.txt'
-    with open (path) as f:
-        l.extend(f.read().split())
+
     data = [float(s) for s in l]
     data = np.array(data).reshape(-1, x_len*y_len+2)
     structure = data[:,:x_len*y_len].reshape(-1, y_len, x_len)
@@ -112,7 +110,7 @@ def evaluation_2(x,y):
     groove = count_groove(x)
     a = 1
     b = 0
-    c = 0.2
+    c = 0
     E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
 
@@ -319,7 +317,4 @@ if __name__ == '__main__':
     input, output = get_data()
     E, n = search_E_max(input, output)
     print(E, n)
-    #print(input[21])
-    #print(input.shape[0])
-    print(input[n])
-    print(20*np.log10(1/output[n]))
+    print(input.shape[0])
