@@ -38,6 +38,11 @@ def main():
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
+        if i > 1/3 * epochs:
+            change_level = 2
+        if i > 2/3 * epochs:
+            change_level = 1
+        
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
