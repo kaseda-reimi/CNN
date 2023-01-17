@@ -10,7 +10,6 @@ from function import x_len, y_len
 
 epochs = 100
 group = 20
-change_level = 3
 
 #初期個体生成
 def create_first_design(mode):
@@ -38,10 +37,11 @@ def main():
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
-        if i > 1/3 * epochs:
-            change_level = 2
+        change_level = 3
         if i > 2/3 * epochs:
             change_level = 1
+        elif i > 1/3 * epochs:
+            change_level = 2
         
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
