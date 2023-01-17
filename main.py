@@ -40,7 +40,7 @@ def main():
         best_eval = copy.deepcopy(eval)
         if i == 1/2 * epochs:
             change_level = 2
-        elif i == 1/5 * epochs:
+        elif i == 4/5 * epochs:
             change_level = 1
         
         for _ in range(group):
