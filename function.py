@@ -109,7 +109,7 @@ def evaluation_2(x,y):
     #groove = np.count_nonzero(x==1)
     groove = count_groove(x)
     a = 1
-    b = 0
+    b = 1
     c = 0
     E = a * extinction - b * loss - c * groove
     return E, extinction, loss, groove
@@ -301,20 +301,19 @@ def create_neighbor(design,change_level):
     return neighbor
 
 def distribution(data):
-    #data = 20*np.log10(1/data)
-    data = 10 * data
+    data = 20*np.log10(1/data)
+    #data = 10 * data
     print(np.amax(data))
     print(np.amin(data))
-    distribution = np.zeros([2,10])
+    distribution = np.zeros([2,39])
     for i in range(data.shape[0]):
-        n = int(data[i][0] // 1)
-        m = int(data[i][1] // 1)
+        n = int(data[i][0] // 1) +3
+        m = int(data[i][1] // 1) +3
         distribution[0][n] += 1
         distribution[1][m] += 1
     return distribution
 
 if __name__ == '__main__':
     input, output = get_data()
-    E, n = search_E_max(input, output)
-    print(E, n)
-    print(input.shape[0])
+    #print (distribution(output))
+    print (search_E_max(input, output))
