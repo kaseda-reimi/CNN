@@ -9,7 +9,7 @@ from function import x_len, y_len
 
 
 epochs = 100
-group = 20
+group = 50
 
 #初期個体生成
 def create_first_design(mode):
