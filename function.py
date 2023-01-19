@@ -301,19 +301,19 @@ def create_neighbor(design,change_level):
     return neighbor
 
 def distribution(data):
-    data = 20*np.log10(1/data)
-    #data = 10 * data
+    #data = 20*np.log10(1/data)
+    data = 10 * data
     print(np.amax(data))
     print(np.amin(data))
-    distribution = np.zeros([2,39])
+    distribution = np.zeros([2,14])
     for i in range(data.shape[0]):
-        n = int(data[i][0] // 1) +3
-        m = int(data[i][1] // 1) +3
+        n = int(data[i][0] // 1)
+        m = int(data[i][1] // 1)
         distribution[0][n] += 1
         distribution[1][m] += 1
     return distribution
 
 if __name__ == '__main__':
     input, output = get_data()
-    #print (distribution(output))
-    print (search_E_max(input, output))
+    print (distribution(output))
+    #print (search_E_max(input, output))
