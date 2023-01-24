@@ -150,9 +150,10 @@ def search_E_max(input, output):
     max_index = 0
     for i in range(input.shape[0]):
         E = evaluation_2(input[i],output[i])
-        if E[0] > E_max:
-            E_max = E[0]
-            max_index = i
+        if i != 216:
+            if E[0] > E_max:
+                E_max = E[0]
+                max_index = i
     return E_max, max_index
 
 def design():
@@ -315,5 +316,5 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
-    print (distribution(output))
-    #print (search_E_max(input, output))
+    #print (distribution(output))
+    print (search_E_max(input, output))
