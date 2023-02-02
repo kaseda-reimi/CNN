@@ -108,7 +108,7 @@ def evaluation_2(x,y):
     loss = 20 * np.log10(1/y[0])
     #groove = np.count_nonzero(x==1)
     groove = count_groove(x)
-    a = 0.5
+    a = 1
     b = 1
     c = 0.5
     E = a * extinction - b * loss - c * groove
@@ -240,18 +240,15 @@ def get_design():
     input, output = get_data()
     #n = np.argmin(output[:,1])
     #n = 216
-    n = 216
+    n = 13
     design = input[n]
     return design
 
 def get_design_z():
     design = np.zeros((y_len, x_len))
-    design[0] = [2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
-    design[1] = [2,2,2,1,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2]
-    design[2] = [2,2,1,0,0,0,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,2,2,2,2,2,2,2,2,2,2]
-    design[3] = [1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
-    design[4] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    design[5] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    design[0:3, 13:] = 2
+    design[3, 13:] = 1
+    design[0:3, 12] = 1
     return design
 
 def create_neighbor(design,change_level):
@@ -316,5 +313,7 @@ def distribution(data):
 
 if __name__ == '__main__':
     input, output = get_data()
+    output = 20*np.log10(1/output)
     #print (distribution(output))
-    print (search_E_max(input, output))
+    #E, n = search_E_max(input, output)
+    print(get_design_z())
