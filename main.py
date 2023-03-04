@@ -56,7 +56,7 @@ def main():
                 best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
-        history[i] = [i,nei_eval[0]]
+        history[i] = [nei_eval[0], best_eval[0]]
         print(i, best_eval)
     
     print(start)
@@ -64,7 +64,11 @@ def main():
     print(design)
     print(best_eval)
     print(model.predict(design.reshape(1,-1)))
-    plt.plot(history[:,0], history[:,1])
+
+
+    plt.plot(history[:,0], "b")
+    plt.plot(history[:,1], "c--")
+    plt.tick_params(axis="both", which="both", direction="in")
     plt.savefig("eval.png")
 
 
