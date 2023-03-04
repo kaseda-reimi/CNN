@@ -9,7 +9,7 @@ import function as fc
 from function import x_len, y_len
 
 
-epochs = 1000
+epochs = 500
 group = 20
 
 #初期個体生成
