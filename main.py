@@ -3,6 +3,7 @@ import random
 import os
 import copy
 from tensorflow.keras.models import load_model
+import matplotlib.pyplot as plt
 from nn import model_path
 import function as fc
 from function import x_len, y_len
@@ -61,6 +62,8 @@ def main():
     print(design)
     print(best_eval)
     print(model.predict(design.reshape(1,-1)))
+    plt.plot(history[:,0], history[:,1])
+    plt.savefig("eval.png")
 
 
 if __name__ == '__main__':
