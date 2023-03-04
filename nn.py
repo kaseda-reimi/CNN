@@ -10,7 +10,7 @@ from function import y_len, x_len
 import numpy as np
 
 input_size = y_len*x_len
-epochs = 10000
+epochs = 5000
 batch_size = 64
 
 model_path = os.getcwd()+'/nn_model'
