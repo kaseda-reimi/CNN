@@ -53,7 +53,7 @@ def main():
                 best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
-        history[i][0] = i,best_eval[0]
+        history[i] = i,best_eval[0]
         print(i, best_eval)
     
     print(start)
