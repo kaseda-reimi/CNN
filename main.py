@@ -35,6 +35,7 @@ def main():
     start = copy.deepcopy(design)
     eval_start = copy.deepcopy(eval)
     change_level = 4
+    history = np.zeros((2,epochs))
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
@@ -52,6 +53,7 @@ def main():
                 best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
+        history[i] = ([i,best_eval])
         print(i, best_eval)
     
     print(start)
