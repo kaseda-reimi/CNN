@@ -40,10 +40,10 @@ def main():
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
-        #if i == 1/2 * epochs:
-        #    change_level = 2
-        #elif i == 4/5 * epochs:
-        #    change_level = 1
+        if i > 4/5 * epochs:
+            change_level = 1
+        elif i == 1/2 * epochs:
+            change_level = 2
         
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
