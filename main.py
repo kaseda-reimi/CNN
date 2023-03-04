@@ -40,21 +40,21 @@ def main():
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
-        if i == 1/2 * epochs:
-            change_level = 2
-        elif i == 4/5 * epochs:
-            change_level = 1
+        #if i == 1/2 * epochs:
+        #    change_level = 2
+        #elif i == 4/5 * epochs:
+        #    change_level = 1
         
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation_2(design, nei_perform[0])
-            #if nei_eval[0] > best_eval[0]:
-            best_eval = copy.deepcopy(nei_eval)
-            best_design = copy.deepcopy(neighbor)
+            if nei_eval[0] > best_eval[0]:
+                best_eval = copy.deepcopy(nei_eval)
+                best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
-        history[i] = [i,best_eval[0]]
+        history[i] = [i,nei_eval[0]]
         print(i, best_eval)
     
     print(start)
