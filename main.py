@@ -35,15 +35,12 @@ def main():
     eval = fc.evaluation_2(design, perform[0])
     start = copy.deepcopy(design)
     eval_start = copy.deepcopy(eval)
-    change_level = 4
+    change_level = 1
     history = np.zeros((epochs, 2))
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
-        if i > 4/5 * epochs:
-            change_level = 1
-        elif i == 1/2 * epochs:
-            change_level = 2
+        
         
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
