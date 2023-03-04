@@ -33,7 +33,7 @@ def main():
     model.add(Dense(input_size/1, activation = "relu"))
     model.add(Dense(input_size/2, activation = "relu"))
     model.add(Dense(input_size/3, activation = "relu"))
-    #model.add(Dense(input_size/6, activation = "relu"))
+    model.add(Dense(input_size/6, activation = "relu"))
     model.add(Dense(2, activation='sigmoid'))
     
     model.compile(loss='mean_absolute_error', optimizer='sgd', metrics=['mae'])
