@@ -9,8 +9,8 @@ import function as fc
 from function import x_len, y_len
 
 
-epochs = 100
-group = 50
+epochs = 500
+group = 20
 
 #初期個体生成
 def create_first_design(mode):
@@ -35,13 +35,17 @@ def main():
     eval = fc.evaluation_2(design, perform[0])
     start = copy.deepcopy(design)
     eval_start = copy.deepcopy(eval)
-    change_level = 2
+    change_level = 4
     history = np.zeros((epochs, 2))
     for i in range(epochs):
         best_design = copy.deepcopy(design)
         best_eval = copy.deepcopy(eval)
         if i > epochs/2:
             change_level = 1
+        elif i > epochs/3:
+            change_level = 2
+        elif i > epochs/4:
+            change_level = 3
         
         for _ in range(group):
             neighbor = fc.create_neighbor(design, change_level)
