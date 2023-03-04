@@ -65,9 +65,9 @@ def main():
     print(best_eval)
     print(model.predict(design.reshape(1,-1)))
 
-
-    plt.plot(history[:,0], "b")
-    plt.plot(history[:,1], "c--")
+    x_axis = np.arange(epochs)
+    plt.plot(x_axis, history[:,0], "b")
+    plt.plot(x_axis, history[:,1], "c--")
     plt.tick_params(axis="both", which="both", direction="in")
     plt.savefig("eval.png")
 
