@@ -49,9 +49,9 @@ def main():
             neighbor = fc.create_neighbor(design, change_level)
             nei_perform = model.predict(neighbor.reshape(1,-1))
             nei_eval = fc.evaluation_2(design, nei_perform[0])
-            if nei_eval[0] > best_eval[0]:
-                best_eval = copy.deepcopy(nei_eval)
-                best_design = copy.deepcopy(neighbor)
+            #if nei_eval[0] > best_eval[0]:
+            best_eval = copy.deepcopy(nei_eval)
+            best_design = copy.deepcopy(neighbor)
         design = best_design
         eval = best_eval
         history[i] = [i,best_eval[0]]
