@@ -13,7 +13,7 @@ input_size = y_len*x_len
 epochs = 10000
 batch_size = 64
 
-model_path = os.getcwd()+'/nn_model25'
+model_path = os.getcwd()+'/nn_model'
 
 def main():
     input_data, output_data = fc.get_data()
@@ -28,9 +28,9 @@ def main():
 
     model = Sequential()
     model.add(InputLayer(input_shape=(input_size,)))
-    model.add(Dense(input_size/1, activation = "relu"))
-    model.add(Dense(input_size/1, activation = "relu"))
-    model.add(Dense(input_size/1, activation = "relu"))
+    #model.add(Dense(input_size/1, activation = "relu"))
+    #model.add(Dense(input_size/1, activation = "relu"))
+    #model.add(Dense(input_size/1, activation = "relu"))
     model.add(Dense(input_size/2, activation = "relu"))
     model.add(Dense(input_size/3, activation = "relu"))
     model.add(Dense(input_size/6, activation = "relu"))
